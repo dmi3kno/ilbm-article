@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.8.17)  23 AUG 2021 10:38
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.8.17)  24 AUG 2021 00:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -960,82 +960,79 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 File: img/QDs.png Graphic file (type bmp)
 <img/QDs.png>
 [3] [4] [5] [6]
-Overfull \hbox (21.6714pt too wide) in paragraph at lines 244--245
+Overfull \hbox (21.6714pt too wide) in paragraph at lines 246--247
 []\TU/lmr/m/n/12 Given the random sample of $[]$, we can use the QF to compute 
 $[] [] [][][][][][][][] [][][][][][][] [] [][][][][][][][][]$,
  []
 
 [7]
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.0pt on input line 262.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.00046pt on input line 262.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 262.
+[8]
 File: ilbm_article_files/figure-latex/gexp-likelihood-graphs-1.pdf Graphic file
  (type pdf)
 <use ilbm_article_files/figure-latex/gexp-likelihood-graphs-1.pdf>
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[8] [9]
+[9] [10]
 File: ilbm_article_files/figure-latex/gamma-ray-prior-graph-1.pdf Graphic file 
 (type pdf)
 <use ilbm_article_files/figure-latex/gamma-ray-prior-graph-1.pdf>
-Missing character: There is no λ (U+03BB) in font [lmroman12-regular]:mapping=t
-ex-text;!
-[10]
+
+Overfull \hbox (66.585pt too wide) in paragraph at lines 392--402
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[11]
 File: ilbm_article_files/figure-latex/rexp-prior-lik-graphs-1.pdf Graphic file 
 (type pdf)
 <use ilbm_article_files/figure-latex/rexp-prior-lik-graphs-1.pdf>
-[11]
+[12]
 File: ilbm_article_files/figure-latex/bathtub-hist-1.pdf Graphic file (type pdf
 )
 <use ilbm_article_files/figure-latex/bathtub-hist-1.pdf>
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 413.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 413.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 413.
-[12]
-Missing character: There is no 𝛼 (U+1D6FC) in font [lmroman12-regular]:mapping=
-tex-text;!
-Missing character: There is no 𝜆 (U+1D706) in font [lmroman12-regular]:mapping=
-tex-text;!
-Missing character: There is no 𝜆 (U+1D706) in font [lmroman12-regular]:mapping=
-tex-text;!
+[13]
 File: ilbm_article_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type 
 pdf)
 <use ilbm_article_files/figure-latex/unnamed-chunk-6-1.pdf>
-[13] [14]
+[14] [15]
 File: img/newton-graph.pdf Graphic file (type pdf)
 <use img/newton-graph.pdf>
-[15] [16]
+[16] [17]
 File: ilbm_article_files/figure-latex/pgnk-error-1.pdf Graphic file (type pdf)
 <use ilbm_article_files/figure-latex/pgnk-error-1.pdf>
 File: ilbm_article_files/figure-latex/gnh-data-1.pdf Graphic file (type pdf)
 <use ilbm_article_files/figure-latex/gnh-data-1.pdf>
-[17]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 File: ilbm_article_files/figure-latex/gnh-combo-graph-1.pdf Graphic file (type 
 pdf)
 <use ilbm_article_files/figure-latex/gnh-combo-graph-1.pdf>
-[18]
+[18] [19]
 File: ilbm_article_files/figure-latex/invalid-gnk-graph-1.pdf Graphic file (typ
 e pdf)
 <use ilbm_article_files/figure-latex/invalid-gnk-graph-1.pdf>
-[19]
-File: ilbm_article_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type 
-pdf)
-<use ilbm_article_files/figure-latex/unnamed-chunk-8-1.pdf>
-[20] [21] (./ilbm_article.bbl [22] [23] [24]) [25] (./ilbm_article.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+[20] [21]
+File: ilbm_article_files/figure-latex/chebyshev-roots-funs-1.pdf Graphic file (
+type pdf)
+<use ilbm_article_files/figure-latex/chebyshev-roots-funs-1.pdf>
+[22] [23] (./ilbm_article.bbl [24] [25] [26]) [27] (./ilbm_article.aux)
 Package rerunfilecheck Info: File `ilbm_article.out' has not changed.
 (rerunfilecheck)             Checksum: D12B044CF35FB934A4B458BB9DF8C728;4007.
  ) 
 Here is how much of TeX's memory you used:
- 19947 strings out of 478475
- 356650 string characters out of 5858856
- 868472 words of memory out of 5000000
- 39888 multiletter control sequences out of 15000+600000
+ 19984 strings out of 478475
+ 358466 string characters out of 5858856
+ 868062 words of memory out of 5000000
+ 39925 multiletter control sequences out of 15000+600000
  410972 words of font info for 90 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 87i,11n,120p,2195b,506s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 87i,11n,120p,2089b,520s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on ilbm_article.pdf (25 pages).
+Output written on ilbm_article.pdf (27 pages).
