@@ -36,14 +36,7 @@ initfun_gexpgovi <- function() list(gamma=runif(1,1,4), dsigma=runif(1,1e-7,1e-1
 
 #### g-and-h distribuition
 
-make_all_gnh_data <- function(){
-  A=5; B=5; C=0.8; g=5; h=0.25
-  tibble(p=runif(1e4),
-         q=qgnh(p, A,B,C,g,h),
-         p_approx=pgnh(q, A,B,C,g,h))
-}
-
-subset_gnh_data <- function(df,N){
+subset_gnh_data <- function(N){
   A=5; B=5; C=0.8; g=5; h=0.25
   set.seed(42) # correct seed!
   rgnh(N, A, B, C, g, h)
@@ -65,8 +58,23 @@ ll_gnh_unif <- function(pars, A, B, C, x){
   ll
 }
 
-initials_gnh <- matrix(c(runif(4,2,7), runif(4, 0.1,0.5)),
-                   ncol = 2, byrow = FALSE, dimnames = list(NULL, c("g","h")))
+make_initials_gnh <- function(){
+  set.seed(42)
+  matrix(c(runif(4,2,7), runif(4, 0.1,0.5)),
+                ncol = 2, byrow = FALSE, dimnames = list(NULL, c("g","h")))
+}
+
+make_ecdat_data <- function(n=NULL){
+  set.seed(42)
+  usd_cad <- Ecdat::Garch$cd
+  usd_cad_lr <- log(tail(usd_cad,-1)/head(usd_cad,-1))
+  #hist(usd_cad_lr,100)
+  res <- usd_cad_lr
+  if(!is.null(n)) res <- sample(usd_cad_lr, n, replace = FALSE)
+  res
+}
+
+
 #### Wakeby distrib
 
 make_flood_data <- function(){
