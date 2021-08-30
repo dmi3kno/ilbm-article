@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.8.17)  27 AUG 2021 13:47
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.8.17)  30 AUG 2021 23:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -950,71 +950,59 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.4pt on input line 157.
+(Font)              scaled to size 8.4pt on input line 156.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 157.
+(Font)              scaled to size 6.0pt on input line 156.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 12.0011pt on input line 157.
+(Font)              scaled to size 12.0011pt on input line 156.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.40076pt on input line 157.
+(Font)              scaled to size 8.40076pt on input line 156.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 157.
+(Font)              scaled to size 6.00055pt on input line 156.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 157.
+(Font)              scaled to size 11.99872pt on input line 156.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.3991pt on input line 157.
+(Font)              scaled to size 8.3991pt on input line 156.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 157.
+(Font)              scaled to size 5.99936pt on input line 156.
 (./ilbm_article.toc [1
 
 ] [2])
 \tf@toc=\write5
 \openout5 = `ilbm_article.toc'.
 
-[3]
 File: img/QDs.png Graphic file (type bmp)
 <img/QDs.png>
-[4] [5] [6]
+[3] [4] [5]
 File: img/moebius-loop.png Graphic file (type bmp)
 <img/moebius-loop.png>
-[7]
-Overfull \hbox (21.6714pt too wide) in paragraph at lines 291--292
-[]\TU/lmr/m/n/12 Given the random sample of $[]$, we can use the QF to compute 
-$[] [] [][][][][][][][] [][][][][][][] [] [][][][][][][][][]$,
+[6] [7]
+Underfull \hbox (badness 2644) in paragraph at lines 285--286
+[]\TU/lmr/m/n/12 Given the random sample of $[]$, we can use the quantile funct
+ion to compute
  []
 
-[8]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 302.
+(Font)              scaled to size 5.0pt on input line 296.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 302.
+(Font)              scaled to size 5.00046pt on input line 296.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 302.
+(Font)              scaled to size 4.99947pt on input line 296.
+[8]
 File: ilbm_article_files/figure-latex/gexp-likelihood-graphs-1.pdf Graphic file
  (type pdf)
 <use ilbm_article_files/figure-latex/gexp-likelihood-graphs-1.pdf>
-[9]
-
-LaTeX Warning: Reference `eq:bayesidqfdqfeq' on page 10 undefined on input line
- 350.
-
-[10]
+[9] [10]
 File: ilbm_article_files/figure-latex/gamma-ray-prior-graph-1.pdf Graphic file 
 (type pdf)
 <use ilbm_article_files/figure-latex/gamma-ray-prior-graph-1.pdf>
 
-Overfull \hbox (66.585pt too wide) in paragraph at lines 379--389
- [][] 
- []
-
-
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[11]
 File: ilbm_article_files/figure-latex/rexp-prior-lik-graphs-1.pdf Graphic file 
 (type pdf)
 <use ilbm_article_files/figure-latex/rexp-prior-lik-graphs-1.pdf>
-[12]
+[11] [12]
 File: ilbm_article_files/figure-latex/bathtub-hist-1.pdf Graphic file (type pdf
 )
 <use ilbm_article_files/figure-latex/bathtub-hist-1.pdf>
@@ -1026,7 +1014,7 @@ pdf)
 <use ilbm_article_files/figure-latex/govi-nuts-graph-1.pdf>
 [13] [14] [15] [16] [17]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 527.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 522.
 [18]
 File: ilbm_article_files/figure-latex/gnh-data-1.pdf Graphic file (type pdf)
 <use ilbm_article_files/figure-latex/gnh-data-1.pdf>
@@ -1037,34 +1025,30 @@ pdf)
 File: ilbm_article_files/figure-latex/invalid-gnk-graph-1.pdf Graphic file (typ
 e pdf)
 <use ilbm_article_files/figure-latex/invalid-gnk-graph-1.pdf>
-[21] [22]
-File: ilbm_article_files/figure-latex/chebyshev-roots-gnk-graph-1.pdf Graphic f
-ile (type pdf)
-<use ilbm_article_files/figure-latex/chebyshev-roots-gnk-graph-1.pdf>
-[23]
-File: ilbm_article_files/figure-latex/chebyshev-roots-gnh-graph-1.pdf Graphic f
-ile (type pdf)
-<use ilbm_article_files/figure-latex/chebyshev-roots-gnh-graph-1.pdf>
-[24] [25] [26]
-Overfull \hbox (185.32484pt too wide) in paragraph at lines 701--701
+[21] [22] [23] [24]
+Overfull \hbox (185.32484pt too wide) in paragraph at lines 673--673
 []   \TU/lmtt/m/n/12 u[i] = approx_govindarajulu_cdf_algebra(x_srt[i], u_guess[
 i], gamma, sigma, rel_tol, f_tol, max_steps);[] 
  []
 
-[27] [28] (./ilbm_article.bbl [29] [30] [31]) [32] (./ilbm_article.aux)
-
-LaTeX Warning: There were undefined references.
-
+[25] [26] [27]
+File: ilbm_article_files/figure-latex/chebyshev-roots-gnk-graph-1.pdf Graphic f
+ile (type pdf)
+<use ilbm_article_files/figure-latex/chebyshev-roots-gnk-graph-1.pdf>
+File: ilbm_article_files/figure-latex/chebyshev-roots-gnh-graph-1.pdf Graphic f
+ile (type pdf)
+<use ilbm_article_files/figure-latex/chebyshev-roots-gnh-graph-1.pdf>
+[28] (./ilbm_article.bbl [29] [30] [31] [32]) [33] (./ilbm_article.aux)
 Package rerunfilecheck Info: File `ilbm_article.out' has not changed.
-(rerunfilecheck)             Checksum: 39AD616571A4F6F1631D3CB9F877F0FB;6505.
+(rerunfilecheck)             Checksum: 55ED34043B180C4F96595E6FDB23D3F7;6574.
  ) 
 Here is how much of TeX's memory you used:
- 20504 strings out of 478475
- 367567 string characters out of 5858856
- 877997 words of memory out of 5000000
- 40432 multiletter control sequences out of 15000+600000
+ 20527 strings out of 478475
+ 368720 string characters out of 5858856
+ 881300 words of memory out of 5000000
+ 40455 multiletter control sequences out of 15000+600000
  410988 words of font info for 92 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 87i,11n,120p,1988b,522s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 87i,11n,120p,1991b,538s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on ilbm_article.pdf (32 pages).
+Output written on ilbm_article.pdf (33 pages).
