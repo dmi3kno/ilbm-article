@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.8.17)  30 AUG 2021 23:00
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.8.17)  4 SEP 2021 23:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -971,6 +971,12 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 \tf@toc=\write5
 \openout5 = `ilbm_article.toc'.
 
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.0pt on input line 179.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.00046pt on input line 179.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 179.
 File: img/QDs.png Graphic file (type bmp)
 <img/QDs.png>
 [3] [4] [5]
@@ -982,12 +988,6 @@ Underfull \hbox (badness 2644) in paragraph at lines 285--286
 ion to compute
  []
 
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 296.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 296.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 296.
 [8]
 File: ilbm_article_files/figure-latex/gexp-likelihood-graphs-1.pdf Graphic file
  (type pdf)
@@ -1043,11 +1043,11 @@ Package rerunfilecheck Info: File `ilbm_article.out' has not changed.
 (rerunfilecheck)             Checksum: 55ED34043B180C4F96595E6FDB23D3F7;6574.
  ) 
 Here is how much of TeX's memory you used:
- 20527 strings out of 478475
- 368720 string characters out of 5858856
- 881300 words of memory out of 5000000
- 40455 multiletter control sequences out of 15000+600000
- 410988 words of font info for 92 fonts, out of 8000000 for 9000
+ 20534 strings out of 478475
+ 368988 string characters out of 5858856
+ 880331 words of memory out of 5000000
+ 40460 multiletter control sequences out of 15000+600000
+ 410996 words of font info for 93 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  87i,11n,120p,1991b,538s stack positions out of 5000i,500n,10000p,200000b,80000s
 
