@@ -20,7 +20,7 @@ institute:
       address: New York, NY
 date: |
   | First version: 2021-06-29
-  | This version: 2021-09-04
+  | This version: 2021-09-05
 linestretch: 1.2
 colorlinks: true
 abstract: |
@@ -251,7 +251,7 @@ $$
 
 where $[q_\Theta(v|\underline{x})]^{-1}$ is the quantile form of the posterior, and the quantile prior $[q_\Theta(v)]^{-1}$ is implied. The quantile function transform $Q_\Theta(v)=\theta,v \in [0,1]$ (given the relevant hyperparameters) hints the shape of the prior. This formulation represents the quantile function transformation of a variate with a standard uniform prior, i.e. the unit parameter $v$. 
 
-In the Claims Example the prior belief about the distribution of the exponential parameter $\lambda$ was represented by the gamma distribution, which is, unfortunately, not easily invertible (Figure \@ref(fig:qdist-chart)). In order to illustrate the indirect specification of the prior, we pick an invertible prior as representation of the expert's beliefs about the exponential parameter $\lambda$. The shape of the new prior $Rayleigh(0.003)$ is comparable to the gamma prior $Gamma(4,0.001)$ used previously (Figure \@ref(fig:gamma-ray-prior-graph)).
+In the Claims Example the prior belief about the distribution of the exponential parameter $\lambda$ was represented by the gamma distribution, which is not easily invertible (Figure \@ref(fig:qdist-chart)). In order to illustrate the indirect specification of the prior, we pick an invertible prior as representation of the expert's beliefs about the exponential parameter $\lambda$. The shape of the new prior $Rayleigh(0.003)$ is comparable to the gamma prior $Gamma(4,0.001)$ used previously (Figure \@ref(fig:gamma-ray-prior-graph)).
 
 \begin{figure}
 
@@ -303,7 +303,7 @@ Table \@ref(tab:rexp-prior-lik-tab) and Figure \@ref(fig:rexp-prior-lik-graphs) 
 
 The models we have used in the previous sections allowed us to choose between *direct* or *indirect* likelihood because the (exponential) sampling distribution was easily invertible. The main advantage of using the *indirect* form of the likelihood is that it allows us to adopt the data generative model based on non-invertible (quantile) distributions. Below, we show an example of updating the parameters of a bathtub-shaped Govindarajulu distribution, which does not have a closed-form CDF or PDF. 
 
-We take the dataset provided in @aarset1987HowIdentifyBathtub on time-to-failure of 50 devices (Figure \@ref(fig:bathtub-hist)). Lifetime reliability data are often modeled using specialized distributions [@nadarajah2009BathtubshapedFailureRate] or 2(3)-component mixtures. @nair2020BayesianInferenceQuantile used the Bayes estimator under the squared error loss function to estimate the posterior mean of the parameter $\gamma$ in the Govindarajulu distribution [@nair2012GovindarajuluDistributionProperties] given the generalized exponential prior [@gupta2007GeneralizedExponentialDistribution]. We extend their approach to estimate the full posterior distribution of both parameters in the Govindarajulu likelihood, implementing it in Stan [@standevelopmentteam2021RStanInterfaceStan]. 
+We take the dataset provided in @aarset1987HowIdentifyBathtub on time-to-failure of 50 devices (Figure \@ref(fig:bathtub-hist)). Lifetime reliability data are often modeled using specialized distributions [@nadarajah2009BathtubshapedFailureRate] or 2(3)-component mixtures. @nair2020BayesianInferenceQuantile used the Bayes estimator under the squared error loss function to estimate the posterior mean of the parameter $\gamma$ in the Govindarajulu distribution [@nair2012GovindarajuluDistributionProperties], given the generalized exponential prior [@gupta2007GeneralizedExponentialDistribution]. We extend their approach to estimate the full posterior distribution of both parameters in the Govindarajulu likelihood, implementing it in Stan [@standevelopmentteam2021RStanInterfaceStan]. 
 
 \begin{figure}
 
