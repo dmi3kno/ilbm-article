@@ -6,11 +6,11 @@ author:
     institute: [lund]
     email: dmytro.perepolkin@cec.lu.se
     correspondence: yes
+  - name: Benjamin Goodrich 
+    institute: [columbia]
   - name: Ullrika Sahlin  
     institute: [lund]
     email: ullrika.sahlin@cec.lu.se
-  - name: Benjamin Goodrich 
-    institute: [columbia]
 institute:
   - lund: 
       name: Centre for Environmental and Climate Science, Lund University
@@ -189,7 +189,7 @@ To illustrate the equivalence of the two ways of specifying likelihood in Bayesi
 
 
 
-@klugman2004LossModelsData model claim amounts using exponential distribution with the mean of $1/\lambda$, where parameter $\lambda$ is given the gamma prior distribution with the shape $\alpha=4$ and the scale $\beta=0.001$. Given three observations of the claim amounts $\underline x$ of {100, 950, 450}, we sample from the posterior distribution of the parameter $\lambda$ using the Hamiltonian Monte Carlo "No U-Turn" sampler implemented in Stan [@standevelopmentteam2021RStanInterfaceStan]. Since gamma prior is conjugate to the exponential sampling distribution [@pratt1995IntroductionStatisticalDecision] we can verify the distribution of the posterior draws using the analytic solution as $f(\lambda|\underline{x})=\text{Gamma}(\lambda| \alpha+N, \beta+\sum \underline{x})$, where $\alpha$ and $\beta$ are the parameters of gamma distribution and $\underline{x}=\{x_1, x_2, \dots x_N\}$ is the sample of observations of size $N$.
+@klugman2004LossModelsData model claim amounts using exponential distribution with the mean of $1/\lambda$, where parameter $\lambda$ is given the gamma prior distribution with the shape $\alpha=4$ and the scale $\beta=0.001$. Given three observations of the claim amounts $\underline x=$ {100, 950, 450}, we sample from the posterior distribution of the parameter $\lambda$ using the Hamiltonian Monte Carlo "No U-Turn" sampler implemented in Stan [@standevelopmentteam2021RStanInterfaceStan]. Since gamma prior is conjugate to the exponential sampling distribution [@pratt1995IntroductionStatisticalDecision] we can verify the distribution of the posterior draws using the analytic solution as $f(\lambda|\underline{x})=\text{Gamma}(\lambda| \alpha+N, \beta+\sum \underline{x})$, where $\alpha$ and $\beta$ are the parameters of gamma distribution and $\underline{x}=\{x_1, x_2, \dots x_N\}$ is the sample of observations of size $N$.
 
 
 

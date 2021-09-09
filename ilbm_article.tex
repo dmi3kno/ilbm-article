@@ -39,7 +39,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdfauthor={Dmytro Perepolkin1,; Ullrika Sahlin1; Benjamin Goodrich2},
+  pdfauthor={Dmytro Perepolkin1,; Benjamin Goodrich2; Ullrika Sahlin1},
   colorlinks=true,
   linkcolor=Maroon,
   filecolor=Maroon,
@@ -141,7 +141,7 @@
 \bibliographystyle{apalike}
 
 \title{\vspace{1cm}The tenets of indirect inference in Bayesian models\vspace{0.5cm}}
-\author{Dmytro Perepolkin\textsuperscript{1,*} \and Ullrika Sahlin\textsuperscript{1} \and Benjamin Goodrich\textsuperscript{2}}
+\author{Dmytro Perepolkin\textsuperscript{1,*} \and Benjamin Goodrich\textsuperscript{2} \and Ullrika Sahlin\textsuperscript{1}}
 \date{First version: 2021-06-29\\
 This version: 2021-09-09}
 
@@ -295,7 +295,7 @@ Since the likelihood in the Equation \eqref{eq:bayesdqfeq} is expressed in terms
 
 To illustrate the equivalence of the two ways of specifying likelihood in Bayesian models, we use the example from \citet{klugman2004LossModelsData}\footnote{Example 16.17 on p.544} regarding the distribution of the claim amounts (referred to hereinafter, as the Claims Example).
 
-\citet{klugman2004LossModelsData} model claim amounts using exponential distribution with the mean of \(1/\lambda\), where parameter \(\lambda\) is given the gamma prior distribution with the shape \(\alpha=4\) and the scale \(\beta=0.001\). Given three observations of the claim amounts \(\underline x\) of \{100, 950, 450\}, we sample from the posterior distribution of the parameter \(\lambda\) using the Hamiltonian Monte Carlo ``No U-Turn'' sampler implemented in Stan \citep{standevelopmentteam2021RStanInterfaceStan}. Since gamma prior is conjugate to the exponential sampling distribution \citep{pratt1995IntroductionStatisticalDecision} we can verify the distribution of the posterior draws using the analytic solution as \(f(\lambda|\underline{x})=\text{Gamma}(\lambda| \alpha+N, \beta+\sum \underline{x})\), where \(\alpha\) and \(\beta\) are the parameters of gamma distribution and \(\underline{x}=\{x_1, x_2, \dots x_N\}\) is the sample of observations of size \(N\).
+\citet{klugman2004LossModelsData} model claim amounts using exponential distribution with the mean of \(1/\lambda\), where parameter \(\lambda\) is given the gamma prior distribution with the shape \(\alpha=4\) and the scale \(\beta=0.001\). Given three observations of the claim amounts \(\underline x=\) \{100, 950, 450\}, we sample from the posterior distribution of the parameter \(\lambda\) using the Hamiltonian Monte Carlo ``No U-Turn'' sampler implemented in Stan \citep{standevelopmentteam2021RStanInterfaceStan}. Since gamma prior is conjugate to the exponential sampling distribution \citep{pratt1995IntroductionStatisticalDecision} we can verify the distribution of the posterior draws using the analytic solution as \(f(\lambda|\underline{x})=\text{Gamma}(\lambda| \alpha+N, \beta+\sum \underline{x})\), where \(\alpha\) and \(\beta\) are the parameters of gamma distribution and \(\underline{x}=\{x_1, x_2, \dots x_N\}\) is the sample of observations of size \(N\).
 
 Table \ref{tab:gexp-likelihood-tab} and Figure \ref{fig:gexp-likelihood-graphs} present the posterior distribution of \(\theta\) from the two gamma-exponential models: one with a direct and another one with an indirect likelihood, along with the posterior from the conjugate model. Stan programs for the corresponding examples are provided in the Supplementary Material.
 
