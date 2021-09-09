@@ -25,7 +25,7 @@ linestretch: 1.2
 colorlinks: true
 abstract: |
  \noindent\setstretch{1}
- This paper extends the application of Bayesian inference to probability distributions defined in terms of quantile function. We introduce the method of *indirect likelihood* to be used in the Bayesian models with sampling distributions which lack an explicit cumulative distribution function. We provide examples and demonstrate the equivalence of the "quantile-based" (indirect) likelihood to the conventional "density-defined" (direct) likelihood. We consider practical aspects of the numerical inversion of quantile function by root-finding required by the indirect likelihood method. In particular, we consider a problem of ensuring the validity of an arbitrary quantile function with the help of Chebyshev polynomials and provide useful tips and implementation of these algorithms in Stan and R. We also extend the same method to propose the definition of an *indirect prior* and discuss the situations where it can be useful. \vspace{.8cm} 
+ This paper extends the application of Bayesian inference to probability distributions defined in terms of its quantile function. We describe the method of *indirect likelihood* to be used in the Bayesian models with sampling distributions which lack an explicit cumulative distribution function. We provide examples and demonstrate the equivalence of the "quantile-based" (indirect) likelihood to the conventional "density-defined" (direct) likelihood. We consider practical aspects of the numerical inversion of quantile function by root-finding required by the indirect likelihood method. In particular, we consider a problem of ensuring the validity of an arbitrary quantile function with the help of Chebyshev polynomials and provide useful tips and implementation of these algorithms in Stan and R. We also extend the same method to propose the definition of an *indirect prior* and discuss the situations where it can be useful. \vspace{.8cm} 
  
 output:
   bookdown::pdf_document2:
@@ -121,9 +121,9 @@ You have to start looking at the world in a new way.\\
 
 ## Aims of the paper
 
-Quantile distributions are a special class of distributions with non-invertible quantile function [@gilchrist2000StatisticalModellingQuantile]. There has been a number of published articles where quantile distributions have been used in a context of the likelihood-free approximate Bayesian computation [@allingham2009BayesianEstimationQuantile; @drovandi2011LikelihoodfreeBayesianEstimation; @karabatsos2018ApproximateLikelihoodPerspective; @fearnhead2012ConstructingSummaryStatistics; @bernton2019ApproximateBayesianComputation; @mcvinish2012ImprovingABCQuantile], but the classical Bayesian inference applications have been limited [@haynes2005BayesianEstimationGandk; @rayner2002NumericalMaximumLikelihood].
+Quantile distributions are a special class of distributions with explicit quantile functions that are not analytically invertible [@gilchrist2000StatisticalModellingQuantile]. There have been a number of published articles where quantile distributions have been used in a context of the likelihood-free approximate Bayesian computation [@allingham2009BayesianEstimationQuantile; @drovandi2011LikelihoodfreeBayesianEstimation; @karabatsos2018ApproximateLikelihoodPerspective; @fearnhead2012ConstructingSummaryStatistics; @bernton2019ApproximateBayesianComputation; @mcvinish2012ImprovingABCQuantile], but the classical Bayesian inference applications have been limited [@haynes2005BayesianEstimationGandk; @rayner2002NumericalMaximumLikelihood].
 
-This article attempts to build on the ideas of @rayner2002NumericalMaximumLikelihood and @nair2020BayesianInferenceQuantile and systematically present and illustrate the Bayesian inference using quantile functions. We call this method of inference "indirect" because instead of dealing with *observations* or *parameters*, it deals with *probabilities* (which we call *depths*^[Because they indicate how "deep" an observation is into the distribution.]) corresponding to these observations or parameters (given the parametrized model). Our aim is to show that the indirect Bayesian inference using intermediate depths, leads to the same posterior beliefs, as the conventional, density-based inference. We highlight and discuss practical challenges related to inverting the non-invertible quantile functions and propose a novel application of the proxy root-finding algorithm for validation of quantile functions. 
+This article attempts to build on the ideas of @rayner2002NumericalMaximumLikelihood and @nair2020BayesianInferenceQuantile and systematically present and illustrate Bayesian inference using quantile functions. We call this method of inference "indirect" because it deals with *intermediate cumulative probabilities* (which we call *depths*^[Because they indicate how "deep" an observation is into the distribution.]) corresponding to observations (given the parametrized model). Our aim is to show that the indirect Bayesian inference using intermediate depths, leads to the same posterior beliefs, as the conventional, density-based inference. We highlight and discuss practical challenges related to inverting the non-invertible quantile functions and propose a novel application of the proxy root-finding algorithm for validation of quantile functions. 
 
 ```{r qdist-chart, fig.cap="Probability distributions, quantile distributions and parameterization.", fig.align='center'}
 rsvg::rsvg_png("img/QDs.svg", "img/QDs.png", width=1200, height = 800)
@@ -164,7 +164,7 @@ $$
 Q_X(u | \theta)=F_X^{-1}(x|\theta)
 $$
 
-Not all CDFs are analytically invertible. A distribution defined by a non-invertible quantile function $Q_X(u | \theta)$ is called a *quantile distribution* (Figure \@ref(fig:qdist-chart)).
+Not all CDFs are analytically invertible. A distribution whose quantile function $Q_X(u | \theta)$ is not analytically invertible is called a *quantile distribution* (Figure \@ref(fig:qdist-chart)).
 
 The derivative of the CDF is the *probability density function* (PDF) denoted by 
 
@@ -212,7 +212,7 @@ f(\theta|\underline{x}) \propto \mathcal{L}(\theta;\underline{x})f(\theta)
 (\#eq:bayespdfeq)
 $$
 
-where $f(\theta|\underline{x})$ is the posterior distribution of $\theta$ after having observed the sample $\underline{x}$, $f(\theta)$ is the prior distribution of $\theta$, and $\mathcal{L}(\theta;x)=\prod_{i=1}^{n}f(x_i|\theta)$ is the likelihood. We refer to this form of likelihood as "direct", because the observables $x$ are used as input to the likelihood function directly.
+where $f(\theta|\underline{x})$ is the posterior distribution of $\theta$ after having observed the sample $\underline{x}$, $f(\theta)$ is the prior distribution of $\theta$, and $\mathcal{L}(\theta;\underline x)=\prod_{i=1}^{n}f(x_i|\theta)$ is the likelihood, which is a function of $\theta$. We refer to this form of likelihood as "direct", because the observed $\underline x$ are used as input to the likelihood function directly.
 
 Given the random sample of $\underline x$, we can use the quantile function to compute $\underline{Q}=\{Q_1(u_1), Q_2(u_2), \dots Q_n(u_n)|\theta\}$, such that $u_i=F(x_i|\theta), i=1\dots n$. The depths $u_i$, which we denote by $\underline u|\theta$ are degenerate random variables, because they are fully determined given the observables $\underline{x}$ and parameter $\theta$. Since $Q(u_i|\theta)=x_i$ we can substitute $\underline Q$ for $\underline x$. Then the Bayesian inference formula \@ref(eq:bayespdfeq) becomes:
 
@@ -224,9 +224,9 @@ $$
 f(\theta|\underline{x}) \propto ...
 instead? -->
 
-We refer to the likelihood $\mathcal{L}(\theta;\underline{Q})=\prod_{i=1}^{n} f(Q(u_i|\theta))=\prod_{i=1}^n[q(u_i|\theta)]^{-1}$ as "indirect", because it relies on computing of intermediate depths $u_i=F(x_i|\theta), i=1\dots n$. As we have shown, the two forms of likelihood $\mathcal{L}(\theta;\underline{Q})$ and $\mathcal{L}(\theta;\underline{x})$ are proportional to each other. Therefore, following the likelihood principle, the posterior beliefs about $\theta$ are independent of the form of the likelihood function used.
+We refer to the likelihood $\mathcal{L}(\theta;\underline{Q})=\prod_{i=1}^{n} f(Q(u_i|\theta))=\prod_{i=1}^n[q(u_i|\theta)]^{-1}$ as "indirect", because it relies on computing of intermediate depths $u_i=F(x_i|\theta), i=1\dots n$. As we have shown, the two forms of likelihood $\mathcal{L}(\theta;\underline{Q})$ and $\mathcal{L}(\theta;\underline{x})$ are equal to each other. Therefore, following the likelihood principle, the posterior beliefs about $\theta$ are equivalent.
 
-Since the likelihood in the Equation \@ref(eq:bayesdqfeq) is expressed in terms of $\underline {Q}=Q(\underline{u}|\theta)$, additional transformation is required to arrive at $\underline{u}=F(\underline{x}|\theta)$. In case the closed form of the CDF  $F(\underline x|\theta)$ is not available, the numeric approximation of $\widehat{Q}^{-1}(\underline{x}|\theta)$ may be used. We discuss the details of the numerical approximation of the inverse quantile function in Section 5 of this paper.
+Since the likelihood in the Equation \@ref(eq:bayesdqfeq) is expressed in terms of $\underline {Q}=Q(\underline{u}|\theta)$, an additional transformation is required to arrive at $\underline{u}=F(\underline{x}|\theta)$. In case a closed form of the CDF  $F(\underline x|\theta)$ is not available, the numeric approximation of $\widehat{Q}^{-1}(\underline{x}|\theta)$ may be used. We discuss the details of the numerical approximation of the inverse quantile function in Section 5 of this paper.
 
 To illustrate the equivalence of the two ways of specifying likelihood in Bayesian models, we use the example from @klugman2004LossModelsData^[Example 16.17 on p.544] regarding the distribution of the claim amounts (referred to hereinafter, as the Claims Example). 
 
@@ -234,7 +234,7 @@ To illustrate the equivalence of the two ways of specifying likelihood in Bayesi
 tar_load(claims_data)
 ```
 
-@klugman2004LossModelsData model claim amounts using exponential distribution with the mean of $1/\lambda$, where parameter $\lambda$ is given the gamma prior distribution with the shape $\alpha=4$ and the scale $\beta=0.001$. Given three observations of the claim amounts $\underline x$ of `r glue::glue_collapse(claims_data$y, sep=", ", last=" and ")`, we sample from the posterior distribution of the parameter $\lambda$ using the Hamiltonian Monte Carlo "No U-Turn" sampler implemented in Stan [@standevelopmentteam2021RStanInterfaceStan]. Since gamma prior is conjugate to the exponential sampling distribution [@pratt1995IntroductionStatisticalDecision] we can verify the distribution of the posterior draws using the analytic solution as $f(\lambda|\underline{x})=\text{Gamma}(\lambda| \alpha+N, \beta+\sum \underline{x})$, where $\alpha$ and $\beta$ are the parameters of gamma distribution and $\underline{x}=\{x_1, x_2, \dots x_N\}$ is the sample of observations of size $N$.
+@klugman2004LossModelsData model claim amounts using exponential distribution with the mean of $1/\lambda$, where parameter $\lambda$ is given the gamma prior distribution with the shape $\alpha=4$ and the scale $\beta=0.001$. Given three observations of the claim amounts $\underline x$ of `r paste0("{",glue::glue_collapse(claims_data$y, sep=", "), "}")`, we sample from the posterior distribution of the parameter $\lambda$ using the Hamiltonian Monte Carlo "No U-Turn" sampler implemented in Stan [@standevelopmentteam2021RStanInterfaceStan]. Since gamma prior is conjugate to the exponential sampling distribution [@pratt1995IntroductionStatisticalDecision] we can verify the distribution of the posterior draws using the analytic solution as $f(\lambda|\underline{x})=\text{Gamma}(\lambda| \alpha+N, \beta+\sum \underline{x})$, where $\alpha$ and $\beta$ are the parameters of gamma distribution and $\underline{x}=\{x_1, x_2, \dots x_N\}$ is the sample of observations of size $N$.
 
 ```{r stan-gexp-pdf-pdf, echo=FALSE, warning=FALSE}
 da_gexp_pdf_pdf <- tar_read(fit_gexp_pdf_pdf) %>% 
@@ -279,13 +279,13 @@ posterior::bind_draws(da_gexp_pdf_pdf, da_gexp_pdf_dqf) %>%
        caption="*Conjugate prior and posterior are in dashed lines")
 ```
 
-The posterior distributions of parameter $\lambda$ from the two models are equivalent and match the analytic solution from the conjugate model within a sampling error.
+The posterior distributions of parameter $\lambda$ from the two models are equivalent and match the analytic solution from the conjugate model within a Monte Carlo error.
 
 ## Direct and indirect prior
 
 It is possible to extend the same logic of substitution using quantile functions to define the *direct* and *indirect* prior. In this section we discuss the transformation of parameters required for implementing the quantile prior and show its connection to the inverse transform used for non-uniform sampling. 
 
-Bayesian inference formula can also be restated using the quantile form of the prior [@nair2020BayesianInferenceQuantile]. Assume that the prior distribution of $\theta$ can be described using the invertible distribution $F_\Theta(\theta)=v$, so that $Q_\Theta(v)=\theta$. Substituting the quantile values $Q_\Theta(v)$ for values of $\theta$, prior beliefs about the parameter(s) of the sampling distribution can be expressed *indirectly* using the distribution of the quantile values corresponding to the depth $v$, given hyperparameter(s) of the prior distribution \@ref(eq:bayesdqfdqfeq).
+Bayesian inference formula can also be restated using the quantile form of the prior [@nair2020BayesianInferenceQuantile]. Assume that the prior distribution of $\theta$ can be described using the invertible CDF $F_\Theta(\theta)=v$, so that $Q_\Theta(v)=\theta$. Substituting the quantile values $Q_\Theta(v)$ for values of $\theta$, prior beliefs about the parameter(s) of the distribution of $\theta$ can be expressed *indirectly* using the distribution of the quantile values corresponding to the depth $v$, given hyperparameter(s) of the prior distribution \@ref(eq:bayesdqfdqfeq).
 
 $$
 \begin{gathered}\;
@@ -296,8 +296,6 @@ f(Q_\Theta(v)|\underline{x}) \propto \mathcal{L}(Q_\Theta(v);\underline{x})f(Q_\
 $$
 
 where $[q_\Theta(v|\underline{x})]^{-1}$ is the indirect form of the quantile posterior, $[q_\Theta(v)]^{-1}$ is the indirect form of quantile prior and  $\mathcal{L}(Q_\Theta(v);\underline{x})$ is the direct likelihood, relying on the non-linear parameter transformation $\theta=Q_\Theta(v)$. The likelihood with such parameter transformation requires a Jacobian adjustment [@andrilli2010ElementaryLinearAlgebra], which is equal to the absolute derivative of the transform, i.e. $J(Q_\Theta(v))=|dQ_\Theta(v)/dv|=|q_\Theta(v)|$. We refer to such formulation of the prior as the *indirect prior* because it describes the prior distribution of depth $v$ corresponding to the parameter $\theta$ and not the distribution of the parameter $\theta$. Therefore its density is expressed in the quantile form $f(Q_\Theta(v))=[q_\Theta(v)]^{-1}$.
-
-Indirect prior can also be used in combination with an indirect likelihood, since, as we showed previously, regardless of the form of likelihood used, the posterior beliefs about the parameter $\theta$ (and, consequently, $v$) will be the same. In such a case, neither prior nor likelihood would require the existence of the closed-form PDF and, therefore, both of them can be represented by quantile distributions. 
 
 Provided that the $Q_\Theta(v)$ is a valid (non-decreasing) quantile function, meaning that $q_\Theta(v)$ is non-negative on $v \in [0,1]$, the quantile density term representing the prior and the Jacobian adjustment can be dropped as they are reciprocal to each other.
 
@@ -310,7 +308,9 @@ $$
 $$
 
 
-where $[q_\Theta(v|\underline{x})]^{-1}$ is the quantile form of the posterior, and the quantile prior $[q_\Theta(v)]^{-1}$ is implied. The quantile function transform $Q_\Theta(v)=\theta,v \in [0,1]$ (given the relevant hyperparameters) hints the shape of the prior. This formulation represents the quantile function transformation of a variate with a standard uniform prior, i.e. the unit parameter $v$. 
+where $[q_\Theta(v|\underline{x})]^{-1}$ is the quantile form of the posterior, and the quantile prior $[q_\Theta(v)]^{-1}$ is implied. The quantile function transform $Q_\Theta(v)=\theta,v \in [0,1]$ (given the relevant hyperparameters) hints at the shape of the prior. This formulation represents the quantile function transformation of a variate with a standard uniform prior, i.e. the unit parameter $v$. 
+
+Indirect prior can also be used in combination with an indirect likelihood, since, as we showed previously, regardless of the form of likelihood used, the posterior beliefs about the parameter $\theta$ (and, consequently, $v$) will be the same. In such a case, neither prior nor likelihood would require the existence of the closed-form PDF and, therefore, both of them can be represented by quantile distributions. 
 
 In the Claims Example the prior belief about the distribution of the exponential parameter $\lambda$ was represented by the gamma distribution, which is not easily invertible (Figure \@ref(fig:qdist-chart)). In order to illustrate the indirect specification of the prior, we pick an invertible prior as representation of the expert's beliefs about the exponential parameter $\lambda$. The shape of the new prior $Rayleigh(0.003)$ is comparable to the gamma prior $Gamma(4,0.001)$ used previously (Figure \@ref(fig:gamma-ray-prior-graph)).
 
@@ -413,7 +413,7 @@ posterior::bind_draws(
        caption="*Prior distribution is shown in dashed line")
 ```
 
-# Indirect likelihood with a non-invertible sampling distribution
+# Indirect likelihood with a non-analytically invertible sampling distribution
 
 The models we have used in the previous sections allowed us to choose between *direct* or *indirect* likelihood because the (exponential) sampling distribution was easily invertible. The main advantage of using the *indirect* form of the likelihood is that it allows us to adopt the data generative model based on non-invertible (quantile) distributions. Below, we show an example of updating the parameters of a bathtub-shaped Govindarajulu distribution, which does not have a closed-form CDF or PDF. 
 
@@ -430,7 +430,7 @@ bathtub_data[["x"]]%>%
 
 ```
 
-We adopt the generalized exponential prior for the parameter $\gamma$ of Govindarajulu distribution with hyperparameters $\alpha$ `r paste(" =", bathtub_data['genexp_alpha'])` and $\lambda$ `r paste(" =", bathtub_data['genexp_lambda'])`. The parameter $\sigma$ of the Govindarajulu distribution can not be lower than the maximum of the observed times-to-failure. Therefore, we defined a shifted exponential prior with the rate $\lambda$ `r paste(" =", bathtub_data['genexp_lambda'])` and varying lower bound corresponding to the highest time to failure (in our example equal to `r bathtub_data$min_sigma`). The Jacobian for adding a constant to the sampled parameter $\sigma$, although required, is equal to one, so there is no impact on the log density, as the shifting transform produces a Jacobian derivative matrix with a unit determinant.
+We adopt the generalized exponential prior for the parameter $\gamma$ of Govindarajulu distribution with hyperparameters $\alpha$ `r paste(" =", bathtub_data['genexp_alpha'])` and $\lambda$ `r paste(" =", bathtub_data['genexp_lambda'])`. The parameter $\sigma$ of the Govindarajulu distribution can not be lower than the maximum of the observed times-to-failure. Therefore, we defined a shifted exponential prior with the rate $\lambda$ `r paste(" =", bathtub_data['genexp_lambda'])` and varying lower bound corresponding to the highest time to failure (in our example equal to `r bathtub_data$min_sigma`). The Jacobian for adding a constant to the sampled parameter $\sigma$ is equal to one, so there is no impact on the log density, as the shifting transform produces a Jacobian derivative matrix with a unit determinant.
 
 ```{r govi-tab, echo=FALSE}
 tar_load(fit_gexpgovi_pdf_dqf_as) 
@@ -465,30 +465,30 @@ gridExtra::grid.arrange(p2_govi, p3_govi, nrow=1)
 
 Table \@ref(tab:govi-tab) and Figure \@ref(fig:govi-pairs-graph) summarize the posterior distribution of the parameters $\sigma$ and $\gamma$ of Govindarajulu distribution. We used 2500 post-warmup iterations and 4 chains (see Figure \@ref(fig:govi-nuts-graph) for NUTS parameter plots).
 
-# Numerical inverting of quantile function
+# Numerical inversion of quantile function
 
-The core element of the *indirect* likelihood method is the use of the intermediate depths $\underline{u}$, corresponding to the observables $\underline{x}$ given the parameter $\theta$. These values can either be found analytically, as $Q^{-1}(x)=F(x)$ for invertible probability distributions, or, numerically via root-finding algorithm, as $\widehat{Q}^{-1}_X(x)=\widehat{F}_X(x)$ e.g. in case of quantile distributions (Figure \@ref(fig:qdist-chart)).
+The core element of the *indirect* likelihood method is the use of the intermediate depths $\underline{u}$, corresponding to the observables $\underline{x}$ given the parameter $\theta$. These values can either be found analytically, as $Q^{-1}(x)=F(x)$ for probability distributions, or, numerically via root-finding algorithm, as $\widehat{Q}^{-1}_X(x)=\widehat{F}_X(x)$ e.g. in case of quantile distributions (Figure \@ref(fig:qdist-chart)).
 
 ## Target function
 
 The problem of inverting a quantile function is tantamount to finding the root of a target function 
 
 $$
- \Omega(x;u|\theta)=[x-Q_X(u|\theta)]
+ \Omega(u;x,\theta)=[x-Q_X(u|\theta)]
 $$ 
 
-where $x$ is a known observation, $\theta$ is the parameter value, and $u|\theta$ is the depth $u$, such that $\Omega(x;u|\theta)=0$. Provided that the $Q(u|\theta)$ is a non-decreasing function and $x$ is a fixed observable value, the target function $\Omega(x;u|\theta)$ is non-increasing. The root-finding algorithm uses the target function to take an observable $x$ and "pull in" its inverted equivalent $Q(u|\theta)$ until the two values exactly meet by iteratively adjusting $u|\theta$.
+where $x$ is a known observation, $\theta$ is the parameter value, and $u|\theta$ is the depth $u$, such that $\Omega(u;x,\theta)=0$. Provided that the $Q(u|\theta)$ is a non-decreasing function and $x$ is a fixed observable value, the target function $\Omega(u;x,\theta)$ is non-increasing. The root-finding algorithm uses the target function to take an observable $x$ and "pull in" its inverted equivalent $Q(u|\theta)$ until the two values exactly meet by iteratively adjusting $u|\theta$.
 
 ## Root-finding algorithms
 
 In principle, the choice of the algorithms for finding the zeros of a target function $\Omega$ includes two broad groups of methods: *bracketing* and *non-bracketing* [@atkinson2008IntroductionNumericalAnalysis; @burden2011NumericalAnalysis]. 
 
-The bracketing methods, such as bisection, secant, Lagrange polynomial and Brent method, require a pair of values around the root, i.e. two values of $u^+$ and $u^-$, such that $\Omega(x;u^+|\theta)>0$ and $\Omega(x;u^-|\theta)<0$. In order for the algorithm to converge on a true value of probability $u|\theta$ faster, the interval $[u^+, u^-]$ needs to be relatively narrow. One way of ensuring that the starting interval is small is via the method, which we call "grid-matching". Because $Q^{-1}(x)=F(x)$ is a non-decreasing function, the interval of depths $[u^+, u^-]$ enclosing the true value $u|\theta$ corresponding to the observable $x$, can be found by matching the observable $x$ to the sorted grid of $K$ quantile values $Q^{grd}_k=Q_X(u^{grd}_k|\theta), \quad k \in 1..K$, where $\forall u^{grd}_k, k \in (1\dots K): 0<u^{grd}_k<1, \; u^{grd}_k<u^{grd}_{k+1}$ come from a sorted grid of depths. Once $x$ is matched to the grid of quantiles $Q^{grd}_k$, the quantile value immediately preceding the observable $x$ and immediately following it, such that $Q^{grd}_{m} \leq x \leq Q^{grd}_{m+1}$ can be determined and the corresponding depths $u^{grd}_m$ and $u^{grd}_{m+1}$ can be returned. The interval formed by these depths can be adopted as $[u^+, u^-]$, as it is guaranteed to contain the value of $u$ corresponding to the root of the target function $\Omega(x;u|\theta)$.
+The bracketing methods, such as bisection, secant, Lagrange polynomial and Brent method, require a pair of values around the root, i.e. two values of $u^+$ and $u^-$, such that $\Omega(u^+;x,\theta)>0$ and $\Omega(u^-;x,\theta)<0$. In order for the algorithm to rapidly converge on a true value of probability $u|\theta$ faster, the interval $[u^+, u^-]$ needs to be relatively narrow. One way of ensuring that the starting interval is small is via the method, which we call "grid-matching". Because $Q^{-1}(x)=F(x)$ is a non-decreasing function, the interval of depths $[u^+, u^-]$ enclosing the true value $u|\theta$ corresponding to the observable $x$, can be found by matching the observable $x$ to the sorted grid of $K$ quantile values $Q^{grd}_k=Q_X(u^{grd}_k|\theta), \quad k \in 1..K$, where $\forall u^{grd}_k, k \in (1\dots K): 0<u^{grd}_k<1, \; u^{grd}_k<u^{grd}_{k+1}$ come from a sorted grid of depths. Once $x$ is matched to the grid of quantiles $Q^{grd}_k$, the quantile value immediately preceding the observable $x$ and immediately following it, such that $Q^{grd}_{m} \leq x \leq Q^{grd}_{m+1}$ can be determined and the corresponding depths $u^{grd}_m$ and $u^{grd}_{m+1}$ can be returned. The interval formed by these depths can be adopted as $[u^+, u^-]$, as it is guaranteed to contain the value of $u$ corresponding to the root of the target function $\Omega(u;x,\theta)$.
 
-The non-bracketing methods, such as Newton-Rhapson, rely on a single "initial guess" value $u_{(i)}$ and the gradient represented by the derivative of a target function $\Omega^\prime(x;u_{(i)}|\theta)$. Following this method the "improved" value $u^*$ can found as: 
+The non-bracketing methods, such as Newton-Rhapson, rely on a single "initial guess" value $u_{(i)}$ and the gradient represented by the derivative of a target function $\Omega^\prime(u_{(i)};x,\theta)$. Following this method the "improved" value $u^*$ can found as: 
 
 $$
-u^*\approx u_{(i)} -\frac{\Omega(x;u_{(i)})}{\Omega^\prime(x;u_{(i)})}
+u^*\approx u_{(i)} -\frac{\Omega(u_{(i)};x,\theta)}{\Omega^\prime(u_{(i)};;x,\theta)}
 $$
 
 Substituting the target function $\Omega$, the Newton-Raphson formula for finding the inverse of the quantile function becomes:
@@ -497,9 +497,9 @@ $$
 u^*\approx u_{(i)}-\frac{x-Q_X(u_{(i)}|\theta)}{d[x-Q_X(u_{(i)}|\theta)]/du_{(i)}}= u_{(i)}+\frac{x-Q_X(u_{(i)}|\theta)}{q_X(u_{(i)}|\theta)}
 $$
 
-where $u_{(i)}$ is the initial value of the probability (the "depth") $u$, corresponding to the observation $x$ given $\theta$, $u^*$ is the new (improved) value of $u_{(i)}$ after an iteration and $q_X(u_{(i)}|\theta)$ is the QDF of X, which is the first derivative of the QF $Q_X(u_{(i)}|\theta)$ with respect to the depth $u_{(i)}$. The procedure can be repeated by taking the approximated $u^*$ as a new initial value $u_{(i)}$ and recomputing the value of $u^*$, until $|\Omega(x;u_{(i)})|\theta)|< \epsilon$, where $\epsilon$ is some small value. For faster convergence it is desirable that the initial guess value $u_{(i)}$ is as close to the true root as possible. The method has been used in the literature for approximating CDFs of several known quantile distributions [see p.99 in @gilchrist2000StatisticalModellingQuantile; p.345 in @nair2013QuantileBasedReliabilityAnalysis].
+where $u_{(i)}$ is the initial value of the probability (the "depth") $u$, corresponding to the observation $x$ given $\theta$, $u^*$ is the new (improved) value of $u_{(i)}$ after an iteration and $q_X(u_{(i)}|\theta)$ is the QDF of X, which is the first derivative of the QF $Q_X(u_{(i)}|\theta)$ with respect to the depth $u_{(i)}$. The procedure can be repeated by taking the approximated $u^*$ as a new initial value $u_{(i)}$ and recomputing the value of $u^*$, until $|\Omega(u_{(i)};x,\theta)|< \epsilon$, where $\epsilon$ is some small value. For faster convergence it is desirable that the initial guess value $u_{(i)}$ be as close to the true root as possible. The method has been used in the literature for approximating CDFs of several known quantile distributions [see p.99 in @gilchrist2000StatisticalModellingQuantile; p.345 in @nair2013QuantileBasedReliabilityAnalysis].
 
-There are other methods which can be adapted for finding the zeros of a function, even though they may have been developed for a different purpose. In the absence of other built-in root-finders, we used Stan's `algebra_solver()`, intended for finding the roots of linear systems, to numerically determine the depths corresponding to the observable times-to-failure (see example in Section 4 above). Stan's solver is based on the Powell hybrid method, initially developed for finding the local minimum of functions. Powell's hybrid method combines the advantages of Newton's method with the steepest descent method, which guarantees stable convergence [@powell1970HybridMethodNonlinear].
+There are other methods which can be adapted for finding the zeros of a function, even though they may have been developed for a different purpose. In the absence of other built-in root-finders, we used Stan's `algebra_solver()`, intended for finding the roots of systems, to numerically determine the depths corresponding to the observable times-to-failure (see example in Section 4 above). Stan's solver is based on the Powell hybrid method, initially developed for finding the local minimum of functions. Powell's hybrid method combines the advantages of Newton's method with the steepest descent method, which guarantees stable convergence [@powell1970HybridMethodNonlinear].
 
 The rest of the section illustrates how to use the bracketing root-finding algorithm implemented in R for inverting the quantile function of the generalized *g-and-h* distribution [@rayner2002NumericalMaximumLikelihood]. The `stats::uniroot()` function in R implements Brent's method, also known as the Brent-Dekkert algorithm, which combines the features of the bisection and secant methods with the inverse quadratic interpolation. Brent's algorithm performance ranks it only slightly behind more recent Riddler and Zhang methods [@stage2013CommentsImprovementBrent; @zhang2011ImprovementBrentMethod].
 
@@ -599,7 +599,7 @@ fit_gnh %>%
 
 # Validation of quantile functions
 
-Flexibility of quantile distributions can become their curse, as certain combinations of parameters may produce an invalid quantile function. In order for the quantile function to be valid, it needs to be continuous and non-decreasing. Note that it is possible for a non-decreasing quantile function to produce a multi-modal density function and still remain valid. The violation of the QF feasibility condition manifests itself in the negative values of the QDF, measuring the rate of change in the quantile function. An invalid shape of the quantile function can cause the CDF approximation to fail both because the root-finding algorithm, such as Newton-Rhapson, can get stuck in the local minimum and because the QDF can produce an invalid gradient. 
+The flexibility of quantile distributions can become a curse, as certain combinations of parameters may produce an invalid quantile function. In order for the quantile function to be valid, it needs to be continuous and non-decreasing. Note that it is possible for a non-decreasing quantile function to produce a multi-modal density function and still remain valid. The violation of the QF feasibility condition manifests itself in the negative values of the QDF, measuring the rate of change in the quantile function. An invalid shape of the quantile function can cause the CDF approximation to fail both because the root-finding algorithm, such as Newton-Rhapson, can get stuck in the local minimum and because the QDF can produce an invalid gradient. 
 
 ## Parameter conditions
 
@@ -661,7 +661,7 @@ Given the shape of the QDF function (most likely U-shaped) the largest error wil
 
 ## Indirect inference
 
-Quantile distributions are expanding the menu of options available to the scientists and offer a wide selection of distributions to be used as likelihoods and/or priors. @hadlock2017QuantileparameterizedMethodsQuantifying summarizes the ideas from @gilchrist2000StatisticalModellingQuantilea and @powley2013QuantileFunctionMethods and provides a useful overview of properties of quantile functions. Using these properties and transformation rules, new distributions can be created on demand [@rodrigues2020FlexibleProcedureFormulating; @midhu2014ClassDistributionsLinear; @sankaran2016NewQuantileFunction; @sankaran2018NewClassQuantile; @yang2009QuantileBasedDistributionsModelling; @smithson2017CDFquantileDistributionsModelling]. 
+Quantile distributions expand the menu of options available to the scientists and offer a wide selection of distributions to be used as likelihoods and/or priors. @hadlock2017QuantileparameterizedMethodsQuantifying summarizes the ideas from @gilchrist2000StatisticalModellingQuantilea and @powley2013QuantileFunctionMethods and provides a useful overview of properties of quantile functions. Using these properties and transformation rules, new distributions can be created on demand [@rodrigues2020FlexibleProcedureFormulating; @midhu2014ClassDistributionsLinear; @sankaran2016NewQuantileFunction; @sankaran2018NewClassQuantile; @yang2009QuantileBasedDistributionsModelling; @smithson2017CDFquantileDistributionsModelling]. 
 
 In the past 20 years many examples using quantile distributions in approximate Bayesian computation (ABC) appeared in the literature [@allingham2009BayesianEstimationQuantile; @drovandi2011LikelihoodfreeBayesianEstimation; @dunson2005ApproximateBayesianInference; @mcvinish2012ImprovingABCQuantile; and @smithson2017CDFquantileDistributionsModelling]. ABC methods normally do not require computation of the likelihood, which in case of quantile distributions is convenient, as they lack an explicit CDF and PDF. 
 
