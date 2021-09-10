@@ -20,7 +20,7 @@ institute:
       address: New York, NY
 date: |
   | First version: 2021-06-29
-  | This version: 2021-09-09
+  | This version: 2021-09-10
 linestretch: 1.2
 colorlinks: true
 abstract: |
@@ -572,9 +572,26 @@ We found that when using *indirect* inference (both in Stan and in R), good init
 
 Embracing and expanding the use of quantile distributions in Bayesian inference can enable new solutions for old problems and enrich the toolkit available to scientists for performing hard inference tasks. We hope that the *indirect* inference methods presented in this paper can contribute to expanding the body of knowledge in Bayesian statistics and fuel further research in the area of quantile distributions.
 
-# Appendix A. Distributions used in the paper
+# Miscellaneous {-}
+## Acknowledgments {-}
+The authors have no conﬂict of interest to declare. D Perepolkin was funded by the strategic research environment Biodiversity and Ecosystem
+Services in Changing Climate (BECC). U Sahlin was funded by the Swedish research council FORMAS through the project “Scaling up
+uncertain environmental evidence” (219‐2013‐1271) and the strategic research environment Biodiversity and Ecosystem
+Services in Changing Climate (BECC). 
 
-## Exponential distribution
+## Data Availability Statement {-}
+The `qpd` R package used in this paper is available on Github at https://github.com/dmi3kno/qpd. Contact corresponding author Dmytro Perepolkin (Dmytro.Perepolkin@cec.lu.se) for requests for data.
+
+## Supplemental materials{-}
+Supplemental materials contain R and Stan code for all examples used in the article.
+
+## ORCID {-}
+Dmytro Perepolkin https://orcid.org/0000-0001-8558-6183  
+Ullrika Sahlin http://orcid.org/0000-0002-2932-6253
+
+# Appendix A. Distributions used in the paper  {-}
+
+## Exponential distribution  {-}
 
 Exponential distribution function $F(x)$ and the probability density function $f(x)$ are given by
 
@@ -598,7 +615,7 @@ $$
 
 where $\lambda>0$ and $u=F(x), u \in [0,1]$
 
-## Rayleigh distribution
+## Rayleigh distribution  {-}
 
 Rayleigh distribution function $F(x)$ and probability density function $f(x)$ are:
 
@@ -622,7 +639,7 @@ $$
 
 where $\sigma>0$ and $p \in [0,1]$.
 
-## Govindarajulu distribution
+## Govindarajulu distribution  {-}
 
 Govindarajulu distribution defined by the quantile function has the following QF and QDF:
 
@@ -636,7 +653,7 @@ where $K=\sigma\gamma(\gamma+1)$, and $\gamma>0$.
 
 The distribution has support on $(Q(0), Q(1))=(0, \sigma)$^[For definition of the Govindarajulu distribution with shifted support see @nair2012GovindarajuluDistributionProperties]. 
 
-## Generalized exponential distribution
+## Generalized exponential distribution  {-}
 
 Generalized exponential distribution has the following CDF and PDF:
 
@@ -650,7 +667,7 @@ $$
 where $x, \alpha, \lambda>0$.
 
 
-# Appendix B. Dealing with false roots
+# Appendix B. Dealing with false roots  {-}
 
 When using high degree polynomials on complex QPDs, false-positives are not uncommon. @boyd2006ComputingRealRoots suggests using the roots identified by the proxy-root-finding method as starting values for the Newton-Raphson algorithm to refine (or refute) the roots. This adds to computational complexity and requires the presence of a valid QCF. The method we adopted in the `qpd` package is based on the idea of using the proxy roots as subdivisions of a QDF (0,1) range and checking a value from every segment of the function range formed by the proxy roots (e.g. if only one proxy root is found, checking one value on each side of the root). This way the number of evaluations required for assuring non-negativity of QDF can be significantly reduced.
 

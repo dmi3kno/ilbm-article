@@ -143,7 +143,7 @@
 \title{\vspace{1cm}The tenets of indirect inference in Bayesian models\vspace{0.5cm}}
 \author{Dmytro Perepolkin\textsuperscript{1,*} \and Benjamin Goodrich\textsuperscript{2} \and Ullrika Sahlin\textsuperscript{1}}
 \date{First version: 2021-06-29\\
-This version: 2021-09-09}
+This version: 2021-09-10}
 
 \begin{document}
 \maketitle
@@ -679,11 +679,45 @@ We found that when using \emph{indirect} inference (both in Stan and in R), good
 
 Embracing and expanding the use of quantile distributions in Bayesian inference can enable new solutions for old problems and enrich the toolkit available to scientists for performing hard inference tasks. We hope that the \emph{indirect} inference methods presented in this paper can contribute to expanding the body of knowledge in Bayesian statistics and fuel further research in the area of quantile distributions.
 
+\hypertarget{miscellaneous}{%
+\section*{Miscellaneous}\label{miscellaneous}}
+\addcontentsline{toc}{section}{Miscellaneous}
+
+\hypertarget{acknowledgments}{%
+\subsection*{Acknowledgments}\label{acknowledgments}}
+\addcontentsline{toc}{subsection}{Acknowledgments}
+
+The authors have no conﬂict of interest to declare. D Perepolkin was funded by the strategic research environment Biodiversity and Ecosystem
+Services in Changing Climate (BECC). U Sahlin was funded by the Swedish research council FORMAS through the project ``Scaling up
+uncertain environmental evidence'' (219‐2013‐1271) and the strategic research environment Biodiversity and Ecosystem
+Services in Changing Climate (BECC).
+
+\hypertarget{data-availability-statement}{%
+\subsection*{Data Availability Statement}\label{data-availability-statement}}
+\addcontentsline{toc}{subsection}{Data Availability Statement}
+
+The \texttt{qpd} R package used in this paper is available on Github at \url{https://github.com/dmi3kno/qpd}. Contact corresponding author Dmytro Perepolkin (\href{mailto:Dmytro.Perepolkin@cec.lu.se}{\nolinkurl{Dmytro.Perepolkin@cec.lu.se}}) for requests for data.
+
+\hypertarget{supplemental-materials}{%
+\subsection*{Supplemental materials}\label{supplemental-materials}}
+\addcontentsline{toc}{subsection}{Supplemental materials}
+
+Supplemental materials contain R and Stan code for all examples used in the article.
+
+\hypertarget{orcid}{%
+\subsection*{ORCID}\label{orcid}}
+\addcontentsline{toc}{subsection}{ORCID}
+
+Dmytro Perepolkin \url{https://orcid.org/0000-0001-8558-6183}\\
+Ullrika Sahlin \url{http://orcid.org/0000-0002-2932-6253}
+
 \hypertarget{appendix-a.-distributions-used-in-the-paper}{%
-\section{Appendix A. Distributions used in the paper}\label{appendix-a.-distributions-used-in-the-paper}}
+\section*{Appendix A. Distributions used in the paper}\label{appendix-a.-distributions-used-in-the-paper}}
+\addcontentsline{toc}{section}{Appendix A. Distributions used in the paper}
 
 \hypertarget{exponential-distribution}{%
-\subsection{Exponential distribution}\label{exponential-distribution}}
+\subsection*{Exponential distribution}\label{exponential-distribution}}
+\addcontentsline{toc}{subsection}{Exponential distribution}
 
 Exponential distribution function \(F(x)\) and the probability density function \(f(x)\) are given by
 
@@ -708,7 +742,8 @@ q(u)=\frac{dQ(u)}{du}=\frac{1}{\lambda(1-u)}
 where \(\lambda>0\) and \(u=F(x), u \in [0,1]\)
 
 \hypertarget{rayleigh-distribution}{%
-\subsection{Rayleigh distribution}\label{rayleigh-distribution}}
+\subsection*{Rayleigh distribution}\label{rayleigh-distribution}}
+\addcontentsline{toc}{subsection}{Rayleigh distribution}
 
 Rayleigh distribution function \(F(x)\) and probability density function \(f(x)\) are:
 
@@ -733,7 +768,8 @@ q(p|\sigma)=\frac{\sigma}{\sqrt{2}\sqrt{-\ln(1-p)}(1-p)}
 where \(\sigma>0\) and \(p \in [0,1]\).
 
 \hypertarget{govindarajulu-distribution}{%
-\subsection{Govindarajulu distribution}\label{govindarajulu-distribution}}
+\subsection*{Govindarajulu distribution}\label{govindarajulu-distribution}}
+\addcontentsline{toc}{subsection}{Govindarajulu distribution}
 
 Govindarajulu distribution defined by the quantile function has the following QF and QDF:
 
@@ -748,7 +784,8 @@ where \(K=\sigma\gamma(\gamma+1)\), and \(\gamma>0\).
 The distribution has support on \((Q(0), Q(1))=(0, \sigma)\)\footnote{For definition of the Govindarajulu distribution with shifted support see \citet{nair2012GovindarajuluDistributionProperties}}.
 
 \hypertarget{generalized-exponential-distribution}{%
-\subsection{Generalized exponential distribution}\label{generalized-exponential-distribution}}
+\subsection*{Generalized exponential distribution}\label{generalized-exponential-distribution}}
+\addcontentsline{toc}{subsection}{Generalized exponential distribution}
 
 Generalized exponential distribution has the following CDF and PDF:
 
@@ -762,7 +799,8 @@ f(x)=\alpha\lambda(1-e^{-\lambda x})^{\alpha-1}e^{-\lambda x}
 where \(x, \alpha, \lambda>0\).
 
 \hypertarget{appendix-b.-dealing-with-false-roots}{%
-\section{Appendix B. Dealing with false roots}\label{appendix-b.-dealing-with-false-roots}}
+\section*{Appendix B. Dealing with false roots}\label{appendix-b.-dealing-with-false-roots}}
+\addcontentsline{toc}{section}{Appendix B. Dealing with false roots}
 
 When using high degree polynomials on complex QPDs, false-positives are not uncommon. \citet{boyd2006ComputingRealRoots} suggests using the roots identified by the proxy-root-finding method as starting values for the Newton-Raphson algorithm to refine (or refute) the roots. This adds to computational complexity and requires the presence of a valid QCF. The method we adopted in the \texttt{qpd} package is based on the idea of using the proxy roots as subdivisions of a QDF (0,1) range and checking a value from every segment of the function range formed by the proxy roots (e.g.~if only one proxy root is found, checking one value on each side of the root). This way the number of evaluations required for assuring non-negativity of QDF can be significantly reduced.
 
