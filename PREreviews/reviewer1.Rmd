@@ -1,0 +1,239 @@
+This paper gives a good overview on Bayesian inference for quantile
+distributions, covering the theoretical basis and practical methods.
+There are also plenty of useful examples. The paper also introduces
+novel methodology for some stages of the process. Overall I recommend
+the paper as an good description of the area.
+
+  
+
+My most major issue with the paper is that I would not find it easy to
+reproduce the results from the code supplied. Other comments are that I
+think the paper could be improved by adding more discussion on some
+topics and fixing some minor mistakes. Full details of all these issues
+are below.
+
+  
+
+**Main comments**
+
+  
+
+A lot of code is included as supplementary material, but it's not
+entirely clear how to run it to reproduce the analyses. Adding a README
+file summarising this would be helpful. Also, looking at the code files
+I can only see Stan code and an R file defining data + target
+distribution. Should there also be code for the fmcmc analyses? Finally,
+I wonder if it would help to include scripts to run the Stan analyses.
+
+  
+
+Some of the paper reviews existing methods, so it would be good to list
+the contributions of the paper in the introduction, in particular which
+parts are novel. (Some contributions are described in various parts of
+Section 7, but it would be helpful to have an overview in one place.)
+
+  
+
+"Indirect inference" is the name of a popular method for likelihood-free
+inference. See for example "Indirect inference" by Gourieroux et al and
+"Estimating functions in indirect inference" by Heggland and Frigessi.
+To avoid confusion you could use a different name (e.g. "indirect
+quantile inference" or "inference for indirect likelihoods"), or add a
+discussion to note that there is no direct connection to this
+literature.
+
+  
+
+I suggest adding a summary of how inference on indirect likelihoods is
+carried out. Section 5 discusses numerical inversion of the quantile
+function but it would be good to add (1) a brief discussion of how this
+used within Stan (and other MCMC algorithms) and (2) a summary of which
+inversion methods you recommend and use in your examples. (There are
+some comment on this in Section 5, but it would be good to have a short
+summary somewhere.) You could then refer to this summary in Sections 3
+and 4 when you perform inference. One particular issue is that HMC
+algorithms require the gradient of the log likelihood. Can you comment
+on how this is calculated for indirect likelihoods?
+
+  
+
+It would be interesting to comment on the run time of inference
+algorithms using indirect likelihoods. Does the need for repeated
+numerical inversion slow these down noticably?
+
+  
+
+Optionally, it would be interesting to comment on possibilities for
+using quantile distributions beyond the case of univariate IID data.
+
+  
+
+**Minor comments**
+
+  
+
+There are some minor grammatical errors in the paper. The writing is
+still easy to understand, but it would be ideal to fix these. One
+particularly noticable error is missing articles (e.g. "the" or "a").
+For instance I suggest adding "The" to the start of (1) the first
+sentence on page 10 (2) the first sentence in Section 5.3 (3) the start
+of most paragraphs in Appendix A.
+
+  
+
+Page 4 Figure 1: It would be good to replace "Some distributions" with
+at least 1 specific example e.g. uniform or exponential?
+
+  
+
+Page 4 Figure 1: There are some unusual distributions mentioned in
+Figure 1, and it would be good to explain to the reader where they can
+find more details about them. Most are described in Section 2.3, so
+perhaps the caption to Figure 1 could mention this. However there are
+some other distributions which I couldn't find described anywhere in the
+paper (Q-Normal and Myserson), and it would be good to add a brief
+comment with citations for these.
+
+  
+
+Page 5 When you introduce the definitions (1) and (2) it would be worth
+noting that you will often omit "|θ" and "\_X" below to simplify
+notation
+
+  
+
+Page 9 Can you clarify the application area for the claims example. Is
+this about insurance claims, or something else?
+
+  
+
+Page 10 "prior beliefs about the parameter(s) of the distribution of θ
+can be expressed indirectly using the distribution of the quantile
+values corresponding to the depth v, given hyperparameter(s) of the
+prior distribution (9)" I think you could simplify this to just say
+"prior beliefs about θ can be expressed indirectly using
+
+a distribution for the depth v".
+
+  
+
+Page 10/11 Currently the bottom equations in (9) and (10) contradict
+each other! To avoid this, a little more notational detail is needed in
+applying the change of variables formula e.g. subscripts on L to denote
+the random variable whose density is given.
+
+  
+
+Page 13 "we defined a shifted exponential prior". For clarity it would
+be helpful to state this prior mathematically e.g. using its pdf.
+
+  
+
+Page 16 In grid-matching, it's possible that x is outside the grid of Q
+values. What should be done in this case?
+
+  
+
+Page 16 The discussion of non-bracketing methods only describes
+Newton-Raphson. It might be worth briefly mentioning how other
+non-bracketing methods differ from this, or saying that you will only
+consider Newton-Raphson.
+
+  
+
+Page 20 "In order for the quantile function to be valid, it needs to
+be... non-decreasing. Note that it is possible for a non-decreasing
+quantile function to... remain valid." These two sentences contradict
+each other! A little more care is needed in this explanation. (I think
+the point is that a non-decreasing function is a valid transformation
+even though it's not a valid quantile function.)
+
+  
+
+Page 24 Section 7.2 might be better as an appendix as it involves some
+technical details of coding in Stan which some readers won't be familiar
+with.
+
+  
+
+Page 26 "We tried to cue initial values closer to the mode of the prior
+to facilitate better mixing of MCMC chains". Can you say more about how
+you picked suitable initial values in practice?
+
+  
+
+**Technicalities and possible typos**
+
+  
+
+Page 5 Equation (2) I think this should say "inf{x: ...}" rather than
+"inf{u : ...}".
+
+  
+
+Page 5 "If $F\_X(x)$ is continuous and non-decreasing" The cdf is
+non-decreasing by defintion! Perhaps this should say strictly
+increasing.
+
+  
+
+Page 5 "simply an inverse" -&gt; "simply the inverse"?
+
+  
+
+Page 8 It would be worth explaining the notation \[1..N\] (and similar
+notation elsewhere)
+
+  
+
+Page 8 I think "computing of" should be "computing"
+
+  
+
+Page 9 It would be more accurate to replace $\\sum \\underline{x}$ with
+$\\sum\_{i=1}^N x\_i$
+
+  
+
+Page 10/11 Ideally the equation blocks (9) and (10) should have
+implication signs ($\\Rightarrow$ in latex) on their 2nd lines
+
+  
+
+Page 11 The first sentence after (10) mainly repeats remarks from the
+previous page.
+
+  
+
+Page 15 "u|θ is the depth u, such that Ω(u; x, θ) = 0" seems slightly
+convoluted - could you just say "u is the depth"?
+
+  
+
+Page 15 "iteratively adjusting u|θ" Would it be more accurate to say
+"iteratively adjusting u"? (similarly for other uses of u|θ later)
+
+  
+
+Page 16 (and elsewhere) Typo "Newton-Rhapson"
+
+  
+
+Page 16 Typo in (12) ";;"
+
+  
+
+Page 17 Section 5.3 uses p for depth instead of u as in earlier
+sections. I suggest using u for consistency, or discussing why this
+change of notation is used.
+
+  
+
+Page 23 "the algorithm start" -&gt; "the algorithm starts"
+
+  
+
+Page 31 Gilchrist 2000a and 2000b are the same reference.
+
+<a href="about:blank" class="ql-preview"></a><span
+class="ql-action"></span><span class="ql-remove"></span>

@@ -1,0 +1,258 @@
+---
+title: "Tenets of indirect inference in Bayesian models <br> Response to Reviewer 1"
+author: "Dmytro Perepolkin, Benjamin Goodrich, Ullrika Sahlin"
+date: "10/7/2021"
+output:
+  html_document:
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo=FALSE}
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+```
+
+
+# Introduction
+
+This document summarizes the full review comments provided by [Reviewer 1](https://prereview.org/about/35b49cb4-3a06-4374-a7d8-fc6cf276149e) for the preprint [Tenets of indirect inference in Bayesian models](https://prereview.org/preprints/doi-10.31219-osf.io-enzgs) and responses by the authors.
+
+<div class = "blue">
+This paper gives a good overview on Bayesian inference for quantile distributions, covering the theoretical basis and practical methods. There are also plenty of useful examples. The paper also introduces novel methodology for some stages of the process. Overall I recommend the paper as an good description of the area.  
+
+My most major issue with the paper is that I would not find it easy to reproduce the results from the code supplied. Other comments are that I think the paper could be improved by adding more discussion on some topics and fixing some minor mistakes. Full details of all these issues are below.
+</div>
+
+Thank you. We made necessary edits to the paper both to enhance reproducibility and to simplify further commenting and referencing. Below are the detailed comments of the Reviewer and responses by the authors.
+
+## Main comments
+
+<div class = "blue">
+A lot of code is included as supplementary material, but it's not entirely clear how to run it to reproduce the analyses. Adding a README file summarising this would be helpful. Also, looking at the code files I can only see Stan code and an R file defining data + target distribution. Should there also be code for the fmcmc analyses? Finally, I wonder if it would help to include scripts to run the Stan analyses.
+</div>
+
+The README has been included. The code in the README is structured as a series of `targets` for easier article compilation and reproducibility. The original .Rmd file of the article is also shared on GitHub. 
+
+<div class = "blue">
+Some of the paper reviews existing methods, so it would be good to list the contributions of the paper in the introduction, in particular which parts are novel. (Some contributions are described in various parts of Section 7, but it would be helpful to have an overview in one place.)
+</div>
+
+The section describing the novelty of the contribution has been included in the introduction under the Paper Contribution sub-section.
+
+<div class = "blue">
+"Indirect inference" is the name of a popular method for likelihood-free inference. See for example "Indirect inference" by Gourieroux et al and "Estimating functions in indirect inference" by Heggland and Frigessi. To avoid confusion you could use a different name (e.g. "indirect quantile inference" or "inference for indirect likelihoods"), or add a discussion to note that there is no direct connection to this literature.
+</div>
+
+Understood and acknowledged. Thank you. The paragraph citing alternative uses of the term is included.
+
+<div class = "blue">
+I suggest adding a summary of how inference on indirect likelihoods is carried out. Section 5 discusses numerical inversion of the quantile function but it would be good to add:  
+
+- a brief discussion of how this used within Stan (and other MCMC algorithms) and  
+
+- a summary of which inversion methods you recommend and use in your examples. (There are some comment on this in Section 5, but it would be good to have a short summary somewhere.) 
+</div>
+
+This is described in "Practical tips for implementing quantile distributions in Stan and in R", which has been now moved to Appendix B. So far the selection of the inversion methods has been limited by availability of the root-finding algorithms in Stan and in R. Stan only has `algebra_solver()` (Powell hybrid method), which works with auto-diff (although, as discussed in the paper, it is not intended to be used within likelihood, and definitely not the way we are using it). We were unable to get `algebra_solver_newton()` to work in the likelihood (which would be another workable alternative in Stan). We implemented some root-finding algorithms in Stan in the process of writing this article. They are much slower than built-in Powell method and therefore do not represent a viable alternative, except for educational purposes.
+
+In R, the `uniroot()` algorithm is Brent-based, but of course other methods exist in various packages. It seems like, regardless of the algorithm used (bracketing or gradient-based) the grid-matching is inevitable, so the effort of finding two initial values (instead of one) is not creating extra computational burden. The advantage of the bracketing methods is that the identification of root is guaranteed, which is a big advantage compared to the gradient-based (non-bracketing) methods. Therefore the bracketing methods (Brent or its modern alternatives Riddler/Zhang) should preferred.
+
+The alternative to grid-matching is to assume that the sample is roughly equispaced on the depth scale as done by Nair et al. (2020). That assumption works relatively well if:
+
+- the data is abundant
+- the parameter is close to the median of the posterior.
+
+Otherwise, initial value generated by this method may be too far from the true depth $u$ (corresponding to the root), which will result in problems with finding the root. We included a sentence on this in the article.
+
+<div class = "blue">
+You could then refer to this summary in Sections 3 and 4 when you perform inference. One particular issue is that HMC algorithms require the gradient of the log likelihood. Can you comment on how this is calculated for indirect likelihoods?
+</div>
+
+Stan calculates the derivative of the log likelihood function automatically. The same applies when likelihood is expressed indirectly using the quantile form. We included a sentence on this in the Appendix C where we discuss practical tips for implementing quantile distributions in Stan and in R.
+
+<div class = "blue">
+It would be interesting to comment on the run time of inference algorithms using indirect likelihoods. Does the need for repeated numerical inversion slow these down noticeably?
+</div>
+
+The inversion of quantile function definitely has a cost. However, if initial guess values are good (close to the root of the target function) than the number of iteration of the root-finder is minimized. We included a sentence on this in the Appendix C where we discuss practical tips for implementing quantile distributions in Stan and in R. 
+
+<div class = "blue">
+Optionally, it would be interesting to comment on possibilities for using quantile distributions beyond the case of univariate IID data.
+</div>
+
+Unfortunately, multivariate quantile distributions are out of the scope for this paper. We included the references to the literature discussing the multivariate applications in the section discussing quantile distributions.
+
+## Minor comments
+
+<div class = "blue">
+There are some minor grammatical errors in the paper. The writing is still easy to understand, but it would be ideal to fix these. One particularly noticable error is missing articles (e.g. "the" or "a"). For instance I suggest adding "The" to the start of (1) the first sentence on page 10 (2) the first sentence in Section 5.3 (3) the start of most paragraphs in Appendix A.
+</div>
+
+Fixed.
+
+<div class = "blue">
+Page 4 Figure 1: It would be good to replace "Some distributions" with at least 1 specific example e.g. uniform or exponential?
+</div>
+
+Done
+
+<div class = "blue">
+Page 4 Figure 1: There are some unusual distributions mentioned in Figure 1, and it would be good to explain to the reader where they can find more details about them. Most are described in Section 2.3, so perhaps the caption to Figure 1 could mention this. However there are some other distributions which I couldn't find described anywhere in the paper (Q-Normal and Myserson), and it would be good to add a brief comment with citations for these.
+</div>
+
+Additional references added to section 2.3
+
+<div class = "blue">
+Page 5 When you introduce the definitions (1) and (2) it would be worth noting that you will often omit "|θ" and "\_X" below to simplify notation
+</div>
+
+Done
+
+<div class = "blue">
+Page 9 Can you clarify the application area for the claims example. Is this about insurance claims, or something else?
+</div>
+
+Yes. Done
+
+<div class = "blue">
+Page 10 "prior beliefs about the parameter(s) of the distribution of θ can be expressed indirectly using the distribution of the quantile values corresponding to the depth v, given hyperparameter(s) of the prior distribution (9)" I think you could simplify this to just say "prior beliefs about θ can be expressed indirectly using a distribution for the depth v".
+</div>
+
+Maybe. I am not sure thinking of prior as distribution of v is correct. Prior is density. The quantile form of density is $f(Q_\Theta(v)))$, so the density of the quantile values corresponding to the random variate $v$. I am also not sure I want to call it "depth" because it is random variate which will be sampled by MCMC algorithm.
+
+<div class = "blue">
+Page 10/11 Currently the bottom equations in (9) and (10) contradict each other! To avoid this, a little more notational detail is needed in applying the change of variables formula e.g. subscripts on L to denote the random variable whose density is given.
+</div>
+
+Agree, but don't know what's the most elegant way of handling it. Ideally we would point out that Nair et al forgot to include the Jacobian, and correct them explicitly. I also want to retain the narrative-like structure of the argument. Let me talk to Ben about this
+
+<div class = "blue">
+Page 13 "we defined a shifted exponential prior". For clarity it would be helpful to state this prior mathematically e.g. using its pdf.
+</div>
+
+Done
+
+<div class = "blue">
+Page 16 In grid-matching, it's possible that x is outside the grid of Q values. What should be done in this case?
+</div>
+
+No, it is impossible. If $Q(u_{grd}|\theta)<x,\; \forall u_{grd}|\theta\in[0,1]$ then $u^*=1$ and that value will be passed to indirect likelihood. Likewise, if $u^*=0$. In both cases it means that the parameter value is not supported by data and MCMC algorithm will correct the proposal accordingly. 
+
+<div class = "blue">
+Page 16 The discussion of non-bracketing methods only describes Newton-Raphson. It might be worth briefly mentioning how other non-bracketing methods differ from this, or saying that you will only consider Newton-Raphson.
+</div>
+
+The details of explaining the derivative-based algorithms work is definitely beyond the scope of the paper. I included some wording related to secant method and higher order Householder's methods.
+
+<div class = "blue">
+Page 20 "In order for the quantile function to be valid, it needs to be... non-decreasing. Note that it is possible for a non-decreasing quantile function to... remain valid." These two sentences contradict each other! A little more care is needed in this explanation. (I think the point is that a non-decreasing function is a valid transformation even though it's not a valid quantile function.)
+</div>
+
+Non-decreasing QF is a valid QF (Gilichrist, 2000, Nair et al 2013, Hadlock, 2017, etc). I corrected the wording by removing the second sentence about the bimodal distributions.
+
+<div class = "blue">
+Page 24 Section 7.2 might be better as an appendix as it involves some technical details of coding in Stan which some readers won't be familiar with.
+</div>
+
+Moved to Appendix C.
+
+<div class = "blue">
+Page 26 "We tried to cue initial values closer to the mode of the prior to facilitate better mixing of MCMC chains". Can you say more about how you picked suitable initial values in practice?
+</div>
+
+There's some advice regarding the MCMC initialization based on priors on [Stan Discussion Forum](https://discourse.mc-stan.org/t/initialization-using-prior/12512/4), but most of it boild down to "reparametrize until default initial values work". Therefore it is within
+
+## Technicalities and possible typos
+
+<div class = "blue">
+Page 5 Equation (2) I think this should say "inf{x: ...}" rather than "inf{u : ...}".
+</div>
+
+Of course, thank you. Corrected
+
+<div class = "blue">
+Page 5 "If $F\_X(x)$ is continuous and non-decreasing" The cdf is non-decreasing by defintion! Perhaps this should say strictly increasing.
+</div>
+
+This is correct. QF exists even when $F(x)$ is not uniquely mapping the values from $[-\infty;\infty]$ to $[0,1]$. In this situation it would not be an inverse, but still a QF. Corrected.
+
+<div class = "blue">
+Page 5 "simply an inverse" -&gt; "simply the inverse"? 
+</div>
+
+Corrected, thank you!
+
+<div class = "blue">
+Page 8 It would be worth explaining the notation \[1..N\] (and similar notation elsewhere)
+</div>
+
+Replaced with $i = 1,2,\dots n$
+
+<div class = "blue">
+Page 8 I think "computing of" should be "computing"
+</div>
+
+Thank you.
+
+<div class = "blue">
+Page 9 It would be more accurate to replace $\sum \underline{x}$ with $\sum_{i=1}^N x\_i$
+</div>
+
+Corrected. Thank you!
+
+<div class = "blue">
+Page 10/11 Ideally the equation blocks (9) and (10) should have implication signs ($\Rightarrow$ in latex) on their 2nd lines
+</div>
+
+Done. Thank you.
+
+<div class = "blue">
+Page 11 The first sentence after (10) mainly repeats remarks from the previous page. 
+</div>
+
+One of two sentences are removed.
+
+<div class = "blue">
+Page 15 "u|θ is the depth u, such that Ω(u; x, θ) = 0" seems slightly convoluted - could you just say "u is the depth"?
+</div>
+
+Agreed.
+
+<div class = "blue">
+Page 15 "iteratively adjusting u|θ" Would it be more accurate to say "iteratively adjusting u"? (similarly for other uses of u|θ later)
+</div>
+
+Agreed.
+
+<div class = "blue">
+Page 16 (and elsewhere) Typo "Newton-Rhapson"
+</div>
+
+Thank you
+
+<div class = "blue">
+Page 16 Typo in (12) ";;"
+</div>
+
+Thank you
+
+<div class = "blue">
+Page 17 Section 5.3 uses p for depth instead of u as in earlier sections. I suggest using u for consistency, or discussing why this change of notation is used.
+</div>
+
+No reason. Switched to $u$
+
+<div class = "blue">
+Page 23 "the algorithm start" -> "the algorithm starts"
+</div>
+
+Thank you
+
+<div class = "blue">
+Page 31 Gilchrist 2000a and 2000b are the same reference.
+</div>
+
+Duplicate reference removed

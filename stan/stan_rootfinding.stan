@@ -32,10 +32,12 @@ matrix lookup_v_bracket(vector x, vector xs, vector ys){
    return -log1m(p)/lambda;
   }
 
+// This derivative of target function (QDF) needs to be modified to match the likelihood. 
   real drootfun_du(real u, real lambda){
     return inv(lambda*(1-u));
   }
 
+// This target function needs to be modified to match the likelihood
   real rootfun(real u, real x, real lambda){
     return x-exponential_s_qf(u, lambda);
   }

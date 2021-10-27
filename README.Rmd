@@ -1,0 +1,300 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+library(magrittr)
+library(targets)
+library(qpd)
+library(extraDistr)
+library(tidyverse)
+library(posterior)
+library(rstan)
+library(fmcmc) 
+library(tarchetypes)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# The tenets of indirect inference in Bayesian models
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+## Abstract
+
+This paper extends the application of Bayesian inference to probability distributions defined in terms of quantile function. We introduce the method of indirect likelihood to be used in the Bayesian models with sampling distributions defined by the quantile function. We provide examples and demonstrate the equivalence of this “quantile-based” (indirect) likelihood to the conventional “density-defined” (direct) likelihood. We consider practical aspects of the numerical inversion of quantile function by root-finding required by the indirect likelihood method. In particular we consider a problem of ensuring the validity of an arbitrary quantile function with the help of Chebyshev polynomials and provide useful tips and implementation of these algorithms in Stan and R. We also extend the same method to propose the definition of an “indirect prior” and discuss the situations where it can be useful.
+
+For full text of the article, please, refer to <https://doi.org/10.31219/osf.io/enzgs>  
+Submit your (PRE)review at the <https://prereview.org/preprints/doi-10.31219-osf.io-enzgs> 
+
+## How this article is built
+
+Target Markdown is a powerful R Markdown interface for reproducible analysis pipelines. Please refer to the [respective chapter in the `targets` user manual](https://books.ropensci.org/targets/markdown.html) for details. This report, when rendered, will produce the paper in its entirety.  The report can also be run in interactive mode by setting `tar_interactive` chunk options to `TRUE`.
+
+## Setup
+
+The paper requires several R packages. The `targets` package must be version 0.5.0.9000 or above. Other packages required by the paper are listed below. This chunk needs to be run interactively before the report is rendered.
+
+```{r, eval = FALSE}
+remotes::install_github("dmi3kno/qpd")
+install.packages(c("targets", "tarchetypes","extraDistr", "tidyverse", "posterior", "rstan", "fmcmc"))
+```
+
+First, we load `targets` to activate the specialized `knitr` engine for Target Markdown. We also remove the `_targets_r` directory which might have been previously written by non-interactive runs of the report.
+
+```{r}
+library(targets)
+tar_unscript()
+```
+
+## Globals
+
+We first define some global options/functions common to all targets. This loads necessary packages into the target environments and sets up a multithread environment.
+
+```{targets ilbm-globals, tar_globals = TRUE}
+options(tidyverse.quiet = TRUE)
+tar_option_set(packages = c("qpd", "extraDistr", "tidyverse", "posterior", "rstan", "fmcmc"))
+options(mc.cores = parallel::detectCores()-2)
+options(clustermq.scheduler="multicode")
+```
+
+These global variables will be used throughout the article as hyper-parameters.
+
+```{targets ilbm-globals-vars, tar_globals=TRUE}
+gamma_a <- 4 # shape
+gamma_b <-1/0.001 # rate = 1/scale
+ray_sigma <- 0.003
+```
+
+## Targets
+
+First we prepare a function which will create a dataset for the claims example. Now we will define a target which will monitor the resulting dataset. These target chunks will become the targets with the chunk name becoming the target name.
+
+```{targets claims_data, tar_simple=TRUE}
+claims.obs <- c(100, 950, 450)
+# We will be checking against the conjugate model
+post_a <-  gamma_a+length(claims.obs)
+post_b <- gamma_b+sum(claims.obs)
+
+list(N = length(claims.obs), y = claims.obs,
+    gamma_a=gamma_a, gamma_b=gamma_b, post_a=post_a, post_b=post_b, ray_sigma=ray_sigma
+    )
+```
+
+These initialization functions will be used in initializing the STAN models
+
+```{targets ilbm-globals-ifuns1, tar_globals=TRUE}
+initfun_gexp <- function() list(lambda=gamma_a/gamma_b + runif(1, -2/gamma_b, +2/gamma_b))
+initfun_rexp <- function() list(lambda=runif(1,1e-3,5e-3))
+initfun_rexp_v <- function() list(v=runif(1,1e-1,9e-1))
+```
+
+### Gamma-Exponential models
+
+Compile and fit gamma exponential direct prior direct likelihood model
+
+```{targets mod_gexp_pdf_pdf, tar_simple=TRUE}
+stan_model("stan/gexp_pdf_pdf_mod.stan")
+```
+
+```{targets fit_gexp_pdf_pdf, tar_simple=TRUE}
+sampling(mod_gexp_pdf_pdf, data=claims_data, seed=42, refresh=0, iter=5000)
+```
+
+Compile and fit gamma exponential direct prior indirect likelihood model
+
+```{targets mod_gexp_pdf_dqf, tar_simple=TRUE}
+stan_model("stan/gexp_pdf_dqf_mod.stan")
+```
+
+```{targets fit_gexp_pdf_dqf, tar_simple=TRUE}
+sampling(mod_gexp_pdf_dqf, data=claims_data, init = initfun_gexp,  seed=42, refresh=0, iter=5000)
+```
+
+### Reyleigh-Exponential models
+
+Compile and fit Rayleigh exponential direct prior direct likelihood model  
+
+```{targets mod_rexp_pdf_pdf, tar_simple=TRUE}
+# compile and fit Rayleigh exponential direct prior direct likelihood model  
+stan_model("stan/rexp_pdf_pdf_mod.stan")
+```
+
+```{targets fit_rexp_pdf_pdf, tar_simple=TRUE}
+sampling(mod_rexp_pdf_pdf, data=claims_data, seed=42, refresh=0, iter=5000)
+```
+
+Compile and fit Rayleigh exponential direct prior indirect likelihood model  
+
+```{targets mod_rexp_pdf_dqf, tar_simple=TRUE}
+# compile and fit Rayleigh exponential direct prior indirect likelihood model
+stan_model("stan/rexp_pdf_dqf_mod.stan")
+```
+
+```{targets fit_rexp_pdf_dqf, tar_simple=TRUE}
+sampling(mod_rexp_pdf_dqf, data=claims_data, init = initfun_rexp, seed=42, refresh=0, iter=5000)
+```
+
+Compile and fit Rayleigh exponential indirect prior direct likelihood model  
+
+```{targets mod_rexp_dqf_pdf, tar_simple=TRUE}
+# compile and fit Rayleigh exponential indirect prior direct likelihood model
+stan_model("stan/rexp_dqf_pdf_mod.stan")
+```
+
+```{targets fit_rexp_dqf_pdf, tar_simple=TRUE}
+sampling(mod_rexp_dqf_pdf, data=claims_data, init = initfun_rexp_v, seed=42, refresh=0, iter=5000)
+```
+
+Compile and fit Rayleigh exponential indirect prior indirect likelihood model  
+
+```{targets mod_rexp_dqf_dqf, tar_simple=TRUE}
+# compile and fit Rayleigh exponential indirect prior indirect likelihood model
+stan_model("stan/rexp_dqf_dqf_mod.stan")
+```
+
+```{targets fit_rexp_dqf_dqf, tar_simple=TRUE}
+sampling(mod_rexp_dqf_dqf, data=claims_data, init = initfun_rexp_v, seed=42, refresh=0, iter=5000)
+```
+
+### Generalized Exponential-Govindarajulu model
+
+```{targets ilbm-globals-ifuns2, tar_globals=TRUE}
+initfun_gexpgovi <- function() list(gamma=runif(1,1,4), dsigma=runif(1,1e-5,1e-3))
+```
+
+Define a helper target which will prepare a bathtub data
+
+```{targets bathtub_data, tar_simple=TRUE}
+set.seed(42)
+p_grd <- qpd::make_pgrid(5000)
+vec_times <- c(0.1,7,36,67,84,0.2,11,40,67,84,1,12,45,67,
+              84,1,18,46,67,85,1,18,47,72,85,1,18, 50,
+              75,85,1,18,55,79,85,2,18,60,82,85,3,21,
+              63,82,86,6,32,63,83,86)
+list(N=length(vec_times), x=vec_times, M=length(p_grd), ys_grd=p_grd,
+       genexp_alpha=5, genexp_lambda=1, min_sigma=max(vec_times), exp_lambda=0.5,
+       rel_tol=1e-12, f_tol=1e-6, max_steps=1e6, verbose=0)
+```
+
+Compile and fit genexp-Govindarajulu direct prior indirect likelihood model
+
+```{targets mod_gexpgovi_pdf_dqf_as, tar_simple=TRUE}
+# compile and fit genexp-Govindarajulu direct prior indirect likelihood model
+stan_model("stan/gexpgovi_pdf_dqf_as_mod.stan")
+```
+
+```{targets fit_gexpgovi_pdf_dqf_as, tar_simple=TRUE}
+sampling(mod_gexpgovi_pdf_dqf_as, data=bathtub_data, init = initfun_gexpgovi,
+         iter=5000, seed=42, control=list(adapt_delta=0.9))
+```
+
+### g-and-h example
+
+Initialization function for the g-and-h model
+
+```{targets ilbm-globals-ifuns3, tar_globals=TRUE}
+# initial values for the g-and-h model
+make_initials_gnh <- function(){
+  set.seed(42)
+  matrix(c(runif(4,2,7), runif(4, 0.1,0.5)),
+                ncol = 2, byrow = FALSE, dimnames = list(NULL, c("g","h")))
+}
+```
+
+The following target generates the synthethic data
+
+```{targets gnh_data, tar_simple=TRUE}
+# prepare synthetic data for g-and-h distribution
+#### g-and-h distribuition
+  N <- 100
+  A=5; B=5; C=0.8; g=5; h=0.25
+  set.seed(42) # correct seed!
+  rgnh(N, A, B, C, g, h)
+```
+
+Define likelihood function for g-and-h model. We will place it into the global target environement to be available for the MCMC target
+
+```{targets ll_gnh_unif, tar_globals=TRUE}
+# Likelihood function for fmcmc
+ll_gnh_unif <- function(pars, A, B, C, x){
+  g <- pars[1]
+  h <- pars[2]
+  if(h<=0) return(-Inf)
+  fmcmc::set_userdata(g=g, h=h)
+  #if(!qpd::is_qdf_valid(qpd::fgnh, A=A,B=B,C=C,g=g, h=h)) return(-Inf)
+  if(!qpd::is_gnh_valid(A=A,B=B,C=C,g=g, h=h, n_grid=1e3)) return(-Inf)
+  u <- pgnh(x, A, B, C, g, h)
+  log_likelihood <- dqgnh(u, A, B, C, g, h, log=TRUE) # DQF
+  log_prior_g <- dnorm(g, mean=3, sd=1, log = TRUE)
+  log_prior_h <- extraDistr::drayleigh(h, 0.3, log = TRUE)
+  ll <- log_prior_g+log_prior_h+sum(log_likelihood)
+  if(!is.finite(ll)) return(-Inf)
+  ll
+}
+```
+
+Sample from g-and-h model using fmcmc. See likelihood function `ll_gnh_unif()` above for details
+
+```{targets fit_gnh, tar_simple=TRUE}
+# sample from g-and-h model using fmcmc. See likelihood function ll_gnh_unif() for details
+MCMC(ll_gnh_unif, initial = make_initials_gnh(),
+                   x=gnh_data,
+                   A=5, B=5, C=0.8,
+                   nsteps = 5000,
+                   burnin = 2000,
+                   multicore = FALSE, nchains = 4L,
+                   kernel = kernel_ram(),
+                   progress = TRUE)
+```
+
+### Render the article
+
+The article will be rendered automatically together with other targets. Of course it can be also rendered manually from the `ilbm_article.Rmd`, but this way we are guaranteed to re-render the article every time the changes are made to any of the target components.
+
+```{targets produce-rmd}
+tarchetypes::tar_render(report, "ilbm_article.Rmd")
+```
+
+## Execute all targets
+
+The following code will remove the old logs, re-build the outdated targets and re-render the final paper. As a result a new directory `_targets` will be created on your computer and the hashed version of the results (in compressed format) will be stored there. 
+
+If you inspect the scripts in the `_targets_r/` you will see a list of statements like `tar_target(name=claims_data,  {...})`. These targets will be ran each individually, as the sub-tasks (also called targets). 
+
+```{r}
+unlink("logs", recursive = TRUE)
+targets::tar_make()
+```
+
+The `targets` dependency graph helps your readers understand the steps of the pipeline at a high level. You can review the graph of task dependencies, including the status of individual nodes, with 
+
+```{r, eval=FALSE}
+targets::tar_visnetwork()
+```
+
+The nodes get invalidated if any modification is made of the node or any of its parents (ancestors). The out-of-date nodes will be rerun next time you run `tar_make()`.
+
+At this point, you can go back and run `{targets}` chunks in interactive mode without interfering with the code or data of the non-interactive pipeline. 
+
+```{r}
+tar_progress_summary()
+```
+
+The results can be retrieved by the name of the subtask. For example, this will retrieve the fit object for the Genexp-Govindarajulu model from the article.
+
+```{r}
+tar_read(fit_gexpgovi_pdf_dqf_as)
+```
+
+## Session Info
+
+```{r}
+sessioninfo::session_info()%>%
+  details::details(summary = 'Session Info')
+```
