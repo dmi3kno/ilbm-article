@@ -42,7 +42,7 @@ The paper requires several R packages. The `targets` package must be version 0.5
 
 ```{r, eval = FALSE}
 remotes::install_github("dmi3kno/qpd")
-install.packages(c("targets", "tarchetypes","extraDistr", "tidyverse", "posterior", "rstan", "fmcmc"))
+install.packages(c("targets", "tarchetypes","extraDistr", "tidyverse", "posterior", "rstan", "fmcmc", "details"))
 ```
 
 First, we load `targets` to activate the specialized `knitr` engine for Target Markdown. We also remove the `_targets_r` directory which might have been previously written by non-interactive runs of the report.

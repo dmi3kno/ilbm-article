@@ -45,7 +45,7 @@ is rendered.
 
 ``` r
 remotes::install_github("dmi3kno/qpd")
-install.packages(c("targets", "tarchetypes","extraDistr", "tidyverse", "posterior", "rstan", "fmcmc"))
+install.packages(c("targets", "tarchetypes","extraDistr", "tidyverse", "posterior", "rstan", "fmcmc", "details"))
 ```
 
 First, we load `targets` to activate the specialized `knitr` engine for
@@ -419,7 +419,7 @@ tar_progress_summary()
 #> # A tibble: 1 × 6
 #>   skipped started built errored canceled since        
 #>     <int>   <int> <int>   <int>    <int> <chr>        
-#> 1      19       0     0       0        0 0.052 seconds
+#> 1      19       0     0       0        0 0.066 seconds
 ```
 
 The results can be retrieved by the name of the subtask. For example,
