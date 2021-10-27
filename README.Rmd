@@ -14,6 +14,7 @@ library(posterior)
 library(rstan)
 library(fmcmc) 
 library(tarchetypes)
+library(details)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"

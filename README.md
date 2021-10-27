@@ -419,7 +419,7 @@ tar_progress_summary()
 #> # A tibble: 1 × 6
 #>   skipped started built errored canceled since        
 #>     <int>   <int> <int>   <int>    <int> <chr>        
-#> 1      19       0     0       0        0 0.066 seconds
+#> 1      19       0     0       0        0 0.041 seconds
 ```
 
 The results can be retrieved by the name of the subtask. For example,
@@ -489,7 +489,7 @@ sessioninfo::session_info()%>%
  DBI              1.1.1      2021-01-15 [1] CRAN (R 4.1.0)                    
  dbplyr           2.1.1      2021-04-06 [1] CRAN (R 4.1.0)                    
  desc             1.4.0      2021-09-28 [1] CRAN (R 4.1.1)                    
- details          0.3.0      2021-10-13 [1] Github (yonicd/details@04b2b4a)   
+ details        * 0.3.0      2021-10-13 [1] Github (yonicd/details@04b2b4a)   
  digest           0.6.28     2021-09-23 [1] CRAN (R 4.1.1)                    
  distributional   0.2.2      2021-02-02 [1] CRAN (R 4.1.0)                    
  dplyr          * 1.0.6      2021-05-05 [1] CRAN (R 4.1.0)                    
