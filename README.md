@@ -394,8 +394,46 @@ targets::tar_make()
 #> ✓ skip target fit_gexpgovi_pdf_dqf_as
 #> ✓ skip target fit_rexp_pdf_pdf
 #> ✓ skip target fit_gexp_pdf_pdf
-#> ✓ skip target report
-#> ✓ skip pipeline
+#> • start target report
+#> This is bayesplot version 1.8.0
+#> - Online documentation and vignettes at mc-stan.org/bayesplot
+#> - bayesplot theme set to bayesplot::theme_default()
+#>    * Does _not_ affect other ggplot2 plots
+#>    * See ?bayesplot_theme_set for details on theme setting
+#> 
+#> Attaching package: 'bayesplot'
+#> 
+#> The following object is masked from 'package:posterior':
+#> 
+#>     rhat
+#> 
+#> 
+#> Attaching package: 'kableExtra'
+#> 
+#> The following object is masked from 'package:dplyr':
+#> 
+#>     group_rows
+#> 
+#> Loading required package: gridSVG
+#> 
+#> Attaching package: 'gridSVG'
+#> 
+#> The following object is masked from 'package:grDevices':
+#> 
+#>     dev.off
+#> 
+#> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+#> • built target report
+#> • end pipeline
+#> Warning messages:
+#> 1: Removed 54 row(s) containing missing values (geom_path). 
+#> 2: Removed 2 row(s) containing missing values (geom_path). 
+#> 3: Removed 2 row(s) containing missing values (geom_path). 
+#> 4: Removed 2 row(s) containing missing values (geom_path). 
+#> 5: Removed 2 row(s) containing missing values (geom_path). 
+#> 6: LaTeX Warning: `!h' float specifier changed to `!ht'.
+#> LaTeX Warning: `!h' float specifier changed to `!ht'. 
+#> 7: 1 targets produced warnings. Run tar_meta(fields = warnings) for the messages.
 ```
 
 The `targets` dependency graph helps your readers understand the steps
@@ -419,7 +457,7 @@ tar_progress_summary()
 #> # A tibble: 1 × 6
 #>   skipped started built errored canceled since        
 #>     <int>   <int> <int>   <int>    <int> <chr>        
-#> 1      19       0     0       0        0 0.041 seconds
+#> 1      18       0     1       0        0 0.131 seconds
 ```
 
 The results can be retrieved by the name of the subtask. For example,
@@ -467,7 +505,7 @@ sessioninfo::session_info()%>%
  collate  en_US.UTF-8                 
  ctype    en_US.UTF-8                 
  tz       Europe/Stockholm            
- date     2021-10-27                  
+ date     2021-10-31                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package        * version    date       lib source                            
@@ -533,7 +571,7 @@ sessioninfo::session_info()%>%
  processx         3.5.2      2021-04-30 [1] CRAN (R 4.1.0)                    
  ps               1.6.0      2021-02-28 [1] CRAN (R 4.1.0)                    
  purrr          * 0.3.4      2020-04-17 [1] CRAN (R 4.1.0)                    
- qpd            * 0.0.0.9000 2021-10-07 [1] local                             
+ qpd            * 0.0.0.9000 2021-10-29 [1] local                             
  R6               2.5.1      2021-08-19 [1] CRAN (R 4.1.1)                    
  Rcpp             1.0.7      2021-07-07 [1] CRAN (R 4.1.0)                    
  RcppParallel     5.1.4      2021-05-04 [1] CRAN (R 4.1.0)                    
