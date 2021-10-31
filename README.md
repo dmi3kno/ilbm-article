@@ -394,46 +394,8 @@ targets::tar_make()
 #> ✓ skip target fit_gexpgovi_pdf_dqf_as
 #> ✓ skip target fit_rexp_pdf_pdf
 #> ✓ skip target fit_gexp_pdf_pdf
-#> • start target report
-#> This is bayesplot version 1.8.0
-#> - Online documentation and vignettes at mc-stan.org/bayesplot
-#> - bayesplot theme set to bayesplot::theme_default()
-#>    * Does _not_ affect other ggplot2 plots
-#>    * See ?bayesplot_theme_set for details on theme setting
-#> 
-#> Attaching package: 'bayesplot'
-#> 
-#> The following object is masked from 'package:posterior':
-#> 
-#>     rhat
-#> 
-#> 
-#> Attaching package: 'kableExtra'
-#> 
-#> The following object is masked from 'package:dplyr':
-#> 
-#>     group_rows
-#> 
-#> Loading required package: gridSVG
-#> 
-#> Attaching package: 'gridSVG'
-#> 
-#> The following object is masked from 'package:grDevices':
-#> 
-#>     dev.off
-#> 
-#> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-#> • built target report
-#> • end pipeline
-#> Warning messages:
-#> 1: Removed 54 row(s) containing missing values (geom_path). 
-#> 2: Removed 2 row(s) containing missing values (geom_path). 
-#> 3: Removed 2 row(s) containing missing values (geom_path). 
-#> 4: Removed 2 row(s) containing missing values (geom_path). 
-#> 5: Removed 2 row(s) containing missing values (geom_path). 
-#> 6: LaTeX Warning: `!h' float specifier changed to `!ht'.
-#> LaTeX Warning: `!h' float specifier changed to `!ht'. 
-#> 7: 1 targets produced warnings. Run tar_meta(fields = warnings) for the messages.
+#> ✓ skip target report
+#> ✓ skip pipeline
 ```
 
 The `targets` dependency graph helps your readers understand the steps
@@ -457,7 +419,7 @@ tar_progress_summary()
 #> # A tibble: 1 × 6
 #>   skipped started built errored canceled since        
 #>     <int>   <int> <int>   <int>    <int> <chr>        
-#> 1      18       0     1       0        0 0.131 seconds
+#> 1      19       0     0       0        0 0.048 seconds
 ```
 
 The results can be retrieved by the name of the subtask. For example,

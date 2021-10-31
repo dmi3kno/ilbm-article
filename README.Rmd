@@ -264,7 +264,7 @@ tarchetypes::tar_render(report, "ilbm_article.Rmd")
 
 ## Execute all targets
 
-The following code will remove the old logs, re-build the outdated targets and re-render the final paper. As a result a new directory `_targets` will be created on your computer and the hashed version of the results (in compressed format) will be stored there.  
+The following code will remove the old logs, re-build the outdated targets and re-render the final paper. As a result a new directory `_targets` will be created on your computer and the hashed version of the results (in compressed format) will be stored there.
 
 If you inspect the scripts in the `_targets_r/` you will see a list of statements like `tar_target(name=claims_data,  {...})`. These targets will be ran each individually, as the sub-tasks (also called targets). 
 
