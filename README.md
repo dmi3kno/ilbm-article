@@ -358,7 +358,8 @@ but this way we are guaranteed to re-render the article every time the
 changes are made to any of the target components.
 
 ``` r
-tarchetypes::tar_render(report, "ilbm_article.Rmd")
+#tarchetypes::tar_render(report, "ilbm_article.Rmd")
+tarchetypes::tar_render(report, "BA-submission.Rmd")
 #> Established _targets.R and _targets_r/targets/produce-rmd.R.
 ```
 
@@ -419,7 +420,7 @@ tar_progress_summary()
 #> # A tibble: 1 × 6
 #>   skipped started built errored canceled since        
 #>     <int>   <int> <int>   <int>    <int> <chr>        
-#> 1      19       0     0       0        0 0.052 seconds
+#> 1      19       0     0       0        0 0.046 seconds
 ```
 
 The results can be retrieved by the name of the subtask. For example,

@@ -259,7 +259,8 @@ MCMC(ll_gnh_unif, initial = make_initials_gnh(),
 The article will be rendered automatically together with other targets. Of course it can be also rendered manually from the `ilbm_article.Rmd`, but this way we are guaranteed to re-render the article every time the changes are made to any of the target components.
 
 ```{targets produce-rmd}
-tarchetypes::tar_render(report, "ilbm_article.Rmd")
+#tarchetypes::tar_render(report, "ilbm_article.Rmd")
+tarchetypes::tar_render(report, "BA-submission.Rmd")
 ```
 
 ## Execute all targets
