@@ -20,7 +20,7 @@ institute:
       address: New York, NY
 date: |
   | First version: 2021-06-29
-  | This version: 2021-10-31
+  | This version: 2022-01-03
 linestretch: 1.2
 colorlinks: true
 abstract: |
@@ -109,9 +109,7 @@ In this section we briefly review the different ways of specifying a probability
 
 Let $X$ be a continuous random variable. It can be expressed via the distribution function, also known as the *cumulative distribution function* (CDF): 
 
-$$
-F_X(x | \theta)=Pr(X \leq x | \theta), \quad \theta \in \mathcal A \subset \mathbb R
-$$
+$$F_X(x | \theta)=Pr(X \leq x | \theta), \quad \theta \in \mathcal A \subset \mathbb R$$
 
 Alternative way of describing the random variable $X$ is via the *quantile function* (QF).
 

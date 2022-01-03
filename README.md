@@ -419,7 +419,7 @@ tar_progress_summary()
 #> # A tibble: 1 × 6
 #>   skipped started built errored canceled since        
 #>     <int>   <int> <int>   <int>    <int> <chr>        
-#> 1      19       0     0       0        0 0.048 seconds
+#> 1      19       0     0       0        0 0.052 seconds
 ```
 
 The results can be retrieved by the name of the subtask. For example,
@@ -459,7 +459,7 @@ sessioninfo::session_info()%>%
 ``` r
 ─ Session info ───────────────────────────────────────────────────────────────
  setting  value                       
- version  R version 4.1.1 (2021-08-10)
+ version  R version 4.1.2 (2021-11-01)
  os       Ubuntu 20.04.3 LTS          
  system   x86_64, linux-gnu           
  ui       X11                         
@@ -467,25 +467,25 @@ sessioninfo::session_info()%>%
  collate  en_US.UTF-8                 
  ctype    en_US.UTF-8                 
  tz       Europe/Stockholm            
- date     2021-10-31                  
+ date     2022-01-03                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package        * version    date       lib source                            
  abind            1.4-5      2016-07-21 [1] CRAN (R 4.1.0)                    
  assertthat       0.2.1      2019-03-21 [1] CRAN (R 4.1.0)                    
- backports        1.2.1      2020-12-09 [1] CRAN (R 4.1.0)                    
+ backports        1.3.0      2021-10-27 [1] CRAN (R 4.1.2)                    
  broom            0.7.7      2021-06-13 [1] CRAN (R 4.1.0)                    
  callr            3.7.0      2021-04-20 [1] CRAN (R 4.1.0)                    
  cellranger       1.1.0      2016-07-27 [1] CRAN (R 4.1.0)                    
  checkmate        2.0.0      2020-02-06 [1] CRAN (R 4.1.0)                    
- cli              3.0.1      2021-07-17 [1] CRAN (R 4.1.0)                    
+ cli              3.1.0      2021-10-27 [1] CRAN (R 4.1.2)                    
  clipr            0.7.1      2020-10-08 [1] CRAN (R 4.1.0)                    
  coda             0.19-4     2020-09-30 [1] CRAN (R 4.1.0)                    
  codetools        0.2-18     2020-11-04 [4] CRAN (R 4.0.3)                    
  colorspace       2.0-2      2021-06-24 [1] CRAN (R 4.1.1)                    
- crayon           1.4.1      2021-02-08 [1] CRAN (R 4.1.0)                    
+ crayon           1.4.2      2021-10-29 [1] CRAN (R 4.1.2)                    
  curl             4.3.2      2021-06-23 [1] CRAN (R 4.1.0)                    
- data.table       1.14.0     2021-02-21 [1] CRAN (R 4.1.0)                    
+ data.table       1.14.2     2021-09-27 [1] CRAN (R 4.1.2)                    
  DBI              1.1.1      2021-01-15 [1] CRAN (R 4.1.0)                    
  dbplyr           2.1.1      2021-04-06 [1] CRAN (R 4.1.0)                    
  desc             1.4.0      2021-09-28 [1] CRAN (R 4.1.1)                    
@@ -502,9 +502,9 @@ sessioninfo::session_info()%>%
  fmcmc          * 0.5-0      2021-07-21 [1] Github (USCbiostats/fmcmc@f9e3a07)
  forcats        * 0.5.1      2021-01-27 [1] CRAN (R 4.1.0)                    
  fs               1.5.0      2020-07-31 [1] CRAN (R 4.1.0)                    
- generics         0.1.0      2020-10-31 [1] CRAN (R 4.1.0)                    
+ generics         0.1.1      2021-10-25 [1] CRAN (R 4.1.2)                    
  ggplot2        * 3.3.5      2021-06-25 [1] CRAN (R 4.1.1)                    
- glue             1.4.2      2020-08-27 [1] CRAN (R 4.1.0)                    
+ glue             1.6.0      2021-12-17 [1] CRAN (R 4.1.2)                    
  gridExtra        2.3        2017-09-09 [1] CRAN (R 4.1.0)                    
  gtable           0.3.0      2019-03-25 [1] CRAN (R 4.1.0)                    
  haven            2.4.1      2021-04-23 [1] CRAN (R 4.1.0)                    
@@ -516,19 +516,19 @@ sessioninfo::session_info()%>%
  jsonlite         1.7.2      2020-12-09 [1] CRAN (R 4.1.0)                    
  knitr            1.36       2021-09-29 [1] CRAN (R 4.1.1)                    
  lattice          0.20-45    2021-09-22 [4] CRAN (R 4.1.1)                    
- lifecycle        1.0.0      2021-02-15 [1] CRAN (R 4.1.0)                    
+ lifecycle        1.0.1      2021-09-24 [1] CRAN (R 4.1.2)                    
  loo              2.4.1      2020-12-09 [1] CRAN (R 4.1.0)                    
- lubridate        1.7.10     2021-02-26 [1] CRAN (R 4.1.0)                    
+ lubridate        1.8.0      2021-10-07 [1] CRAN (R 4.1.2)                    
  magrittr       * 2.0.1      2020-11-17 [1] CRAN (R 4.1.0)                    
  MASS             7.3-54     2021-05-03 [4] CRAN (R 4.0.5)                    
- matrixStats      0.59.0     2021-06-01 [1] CRAN (R 4.1.0)                    
+ matrixStats      0.61.0     2021-09-17 [1] CRAN (R 4.1.2)                    
  modelr           0.1.8      2020-05-19 [1] CRAN (R 4.1.0)                    
  munsell          0.5.0      2018-06-12 [1] CRAN (R 4.1.0)                    
- pillar           1.6.2      2021-07-29 [1] CRAN (R 4.1.0)                    
+ pillar           1.6.4      2021-10-18 [1] CRAN (R 4.1.2)                    
  pkgbuild         1.2.0      2020-12-15 [1] CRAN (R 4.1.0)                    
  pkgconfig        2.0.3      2019-09-22 [1] CRAN (R 4.1.0)                    
  png              0.1-7      2013-12-03 [1] CRAN (R 4.1.0)                    
- posterior      * 1.0.1      2021-07-14 [1] CRAN (R 4.1.1)                    
+ posterior      * 1.1.0      2021-09-09 [1] CRAN (R 4.1.2)                    
  prettyunits      1.1.1      2020-01-24 [1] CRAN (R 4.1.0)                    
  processx         3.5.2      2021-04-30 [1] CRAN (R 4.1.0)                    
  ps               1.6.0      2021-02-28 [1] CRAN (R 4.1.0)                    
@@ -540,31 +540,31 @@ sessioninfo::session_info()%>%
  readr          * 2.0.0      2021-07-20 [1] CRAN (R 4.1.0)                    
  readxl           1.3.1      2019-03-13 [1] CRAN (R 4.1.0)                    
  reprex           2.0.0      2021-04-02 [1] CRAN (R 4.1.0)                    
- rlang            0.4.11     2021-04-30 [1] CRAN (R 4.1.0)                    
+ rlang            0.4.12     2021-10-18 [1] CRAN (R 4.1.2)                    
  rmarkdown        2.9        2021-06-15 [1] CRAN (R 4.1.0)                    
  rprojroot        2.0.2      2020-11-15 [1] CRAN (R 4.1.0)                    
  rstan          * 2.26.1     2021-06-15 [1] local                             
  rstudioapi       0.13       2020-11-12 [1] CRAN (R 4.1.0)                    
- rvest            1.0.1      2021-07-26 [1] CRAN (R 4.1.1)                    
+ rvest            1.0.2      2021-10-16 [1] CRAN (R 4.1.2)                    
  scales           1.1.1      2020-05-11 [1] CRAN (R 4.1.0)                    
  sessioninfo      1.1.1      2018-11-05 [1] CRAN (R 4.1.0)                    
  StanHeaders    * 2.26.1     2021-06-15 [1] local                             
- stringi          1.7.5      2021-10-04 [1] CRAN (R 4.1.1)                    
+ stringi          1.7.6      2021-11-29 [1] CRAN (R 4.1.2)                    
  stringr        * 1.4.0      2019-02-10 [1] CRAN (R 4.1.0)                    
  tarchetypes    * 0.3.0      2021-08-04 [1] CRAN (R 4.1.1)                    
  targets        * 0.6.0      2021-07-21 [1] CRAN (R 4.1.1)                    
  tensorA          0.36.2     2020-11-19 [1] CRAN (R 4.1.0)                    
- tibble         * 3.1.4      2021-08-25 [1] CRAN (R 4.1.1)                    
+ tibble         * 3.1.6      2021-11-07 [1] CRAN (R 4.1.2)                    
  tidyr          * 1.1.3      2021-03-03 [1] CRAN (R 4.1.0)                    
  tidyselect       1.1.1      2021-04-30 [1] CRAN (R 4.1.0)                    
- tidyverse      * 1.3.1      2021-04-15 [1] CRAN (R 4.1.0)                    
+ tidyverse      * 1.3.1      2021-04-15 [1] CRAN (R 4.1.2)                    
  tzdb             0.1.2      2021-07-20 [1] CRAN (R 4.1.0)                    
  utf8             1.2.2      2021-07-24 [1] CRAN (R 4.1.0)                    
- V8               3.4.2      2021-05-01 [1] CRAN (R 4.1.0)                    
+ V8               3.6.0      2021-11-10 [1] CRAN (R 4.1.2)                    
  vctrs            0.3.8      2021-04-29 [1] CRAN (R 4.1.0)                    
  withr            2.4.2      2021-04-18 [1] CRAN (R 4.1.0)                    
  xfun             0.26       2021-09-14 [1] CRAN (R 4.1.1)                    
- xml2             1.3.2      2020-04-23 [1] CRAN (R 4.1.0)                    
+ xml2             1.3.3      2021-11-30 [1] CRAN (R 4.1.2)                    
  yaml             2.2.1      2020-02-01 [1] CRAN (R 4.1.0)                    
 
 [1] /home/dm0737pe/R/x86_64-pc-linux-gnu-library/4.1
